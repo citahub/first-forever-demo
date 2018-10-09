@@ -1,0 +1,11 @@
+# build
+build
+
+# config
+config.js
+
+# deps
+node_modules
+
+# editor
+.vscode
