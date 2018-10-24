@@ -52,7 +52,7 @@ class Add extends React.Component {
         }
       })
       .catch(err => {
-        this.setState({ errorText: JSON.stringify(err) })
+        this.setState({ errorText: JSON.stringify(err.toString()) })
       })
   }
   render() {
@@ -60,14 +60,10 @@ class Add extends React.Component {
     return (
       <div className="add__content--container">
         <div className="add__time--container">
-          <span className="add__time--year">{time.getFullYear()}</span>
-          :
-          <span className="add__time--month">{timeFormatter((time.getMonth() + 1) % 12)}</span>
-          :
-          <span className="add__time--day">{timeFormatter(time.getDate())}</span>
-          :
-          <span className="add__time--hour">{timeFormatter(time.getHours())}</span>
-          :
+          <span className="add__time--year">{time.getFullYear()}</span>:
+          <span className="add__time--month">{timeFormatter((time.getMonth() + 1) % 12)}</span>:
+          <span className="add__time--day">{timeFormatter(time.getDate())}</span>:
+          <span className="add__time--hour">{timeFormatter(time.getHours())}</span>:
           <span className="add__time--min">{timeFormatter(time.getMinutes())}</span>
         </div>
         <div className="add__content--prompt">
