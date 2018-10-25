@@ -30,6 +30,7 @@ class Add extends React.Component {
       .then(current => {
         const tx = {
           ...transaction,
+          from: nervos.appchain.defaultAccount,
           validUntilBlock: +current + 88,
         }
         this.setState({
