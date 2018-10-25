@@ -30,6 +30,7 @@ class Add extends React.Component {
       .then(current => {
         const tx = {
           ...transaction,
+          from: nervos.appchain.defaultAccount,
           validUntilBlock: +current + 88,
         }
         this.setState({
@@ -41,7 +42,7 @@ class Add extends React.Component {
         if (res.hash) {
           return nervos.listeners.listenToTransactionReceipt(res.hash)
         } else {
-          throw new Error('No Transaction Hash Received')
+          throw new Error('Rejected or No Transaction Hash Received')
         }
       })
       .then(receipt => {
@@ -52,7 +53,7 @@ class Add extends React.Component {
         }
       })
       .catch(err => {
-        this.setState({ errorText: JSON.stringify(err) })
+        this.setState({ errorText: JSON.stringify(err.toString()) })
       })
   }
   render() {
@@ -60,14 +61,10 @@ class Add extends React.Component {
     return (
       <div className="add__content--container">
         <div className="add__time--container">
-          <span className="add__time--year">{time.getFullYear()}</span>
-          :
-          <span className="add__time--month">{timeFormatter((time.getMonth() + 1) % 12)}</span>
-          :
-          <span className="add__time--day">{timeFormatter(time.getDate())}</span>
-          :
-          <span className="add__time--hour">{timeFormatter(time.getHours())}</span>
-          :
+          <span className="add__time--year">{time.getFullYear()}</span>:
+          <span className="add__time--month">{timeFormatter((time.getMonth() + 1) % 12)}</span>:
+          <span className="add__time--day">{timeFormatter(time.getDate())}</span>:
+          <span className="add__time--hour">{timeFormatter(time.getHours())}</span>:
           <span className="add__time--min">{timeFormatter(time.getMinutes())}</span>
         </div>
         <div className="add__content--prompt">
