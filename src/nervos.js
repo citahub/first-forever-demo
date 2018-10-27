@@ -4,7 +4,7 @@ const {
 
 const config = require('./config')
 
-const nervos = Nervos(config.chain) // config.chain indicates that the address of Appchain to interact
+// const nervos = Nervos(config.chain) // config.chain indicates that the address of Appchain to interact
 
 
 // NOTICE:
@@ -30,6 +30,7 @@ if (typeof window.nervos !== 'undefined') {
   console.log('No nervos? You should consider trying Neuron!')
   window.nervos = Nervos(config.chain)
 }
-var nervos = window.nervos
+
+const nervos = window.nervos
 
 module.exports = nervos
