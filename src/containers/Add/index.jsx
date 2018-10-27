@@ -42,7 +42,7 @@ class Add extends React.Component {
         if (res.hash) {
           return nervos.listeners.listenToTransactionReceipt(res.hash)
         } else {
-          throw new Error('No Transaction Hash Received')
+          throw new Error('Rejected or No Transaction Hash Received')
         }
       })
       .then(receipt => {
@@ -53,7 +53,7 @@ class Add extends React.Component {
         }
       })
       .catch(err => {
-        this.setState({ errorText: JSON.stringify(err) })
+        this.setState({ errorText: JSON.stringify(err.toString()) })
       })
   }
   render() {
