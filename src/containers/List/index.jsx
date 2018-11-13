@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
-import nervos from '../../nervos'
+import appchain from '../../appchain'
 require('./list.css')
 
 const Record = ({ time, text, hasYearLabel }) => {
@@ -24,8 +24,9 @@ class List extends React.Component {
     texts: [],
   }
   componentDidMount() {
-    // const from = nervos.appchain.accounts.wallet[0] ? nervos.appchain.accounts.wallet[0].address : ''
-    const from = nervos.appchain.defaultAccount
+    const from = appchain.base.accounts.wallet[0]
+      ? appchain.base.accounts.wallet[0].address
+      : appchain.base.defaultAccount
     simpleStoreContract.methods
       .getList()
       .call({
