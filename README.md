@@ -1,4 +1,4 @@
-# Demo1: First Forever
+# First Forever
 
 This demo shows the entire process of building a MVP Dapp on Appchain.
 
@@ -109,16 +109,18 @@ The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` ca
 In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @appchain/base`, and then instantiate `nervos` in `src/appchain.js`.
 
 ```javascript
-const { default: Nervos } = require('@nervos/chain')
+const {
+  default: AppChain
+} = require('@appchain/base')
 
 const config = require('./config')
 
-const appchain = Nervos(config.chain) // config.chain indicates that the address of Appchain to interact
+const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
 const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
-appchain.base.accounts.wallet.add(account) // add account to nervos
+appchain.base.accounts.wallet.add(account) // add account to appchain
 
-module.exports = nervos
+module.exports = appchain
 ```
 
 ## 4. Smart Contract
@@ -158,7 +160,7 @@ contract SimpleStore {
 }
 ```
 
-Smart Contract can be debugged on [Remix](https://remix.ethereum.org/), an online solidity debugger
+Smart Contract can be debugged on [Appchain-ide](https://appchain-ide.cryptape.com/), an online solidity debugger
 
 ![remix](https://cdn.cryptape.com/docs/images/remix.png)
 
@@ -436,11 +438,13 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 ```javascript
 // src/appchain.js
 
-const { default: Nervos } = require('@nervos/chain')
+const {
+  default: AppChain
+} = require('@appchain/base')
 
 const config = require('./config')
 
-const appchain = Nervos(config.chain) // config.chain indicates that the address of Appchain to interact
+const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
 const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
 // appchain.base.accounts.wallet.add(account) // add account to nervos
@@ -450,7 +454,7 @@ window.addEventListener('neuronWebReady', () => {
   }
 })
 
-module.exports = nervos
+module.exports = appchain
 ```
 
 ## Render App After NeuronWeb Integration
