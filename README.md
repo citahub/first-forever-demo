@@ -82,7 +82,7 @@ Now the project looks like
 
 ## 2. Add Components of the Dapp
 
-This step is very familiar to webapp developers, [Route](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/Routes.jsx), [Containers](https://github.com/cryptape/dapp-demos/tree/develop/first-forever/src/containers) and [Components](https://github.com/cryptape/dapp-demos/tree/develop/first-forever/src/components) will be added to the Dapp
+This step is very familiar to webapp developers, [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) will be added to the Dapp
 
 ```shell
 └── src
@@ -93,10 +93,10 @@ This step is very familiar to webapp developers, [Route](https://github.com/cryp
 
 The Route indicates that the demo has 4 pages:
 
-- [Homepage](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/containers/Home/index.jsx)
-- [AddMemo](https://github.com/cryptape/dapp-demos/tree/develop/first-forever/src/containers/Add/index.jsx)
-- [MemoList](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/containers/List/index.jsx)
-- [Memo](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/containers/Show/index.jsx)
+- [Homepage](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Home/index.jsx)
+- [AddMemo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Add/index.jsx)
+- [MemoList](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/List/index.jsx)
+- [Memo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
 
 All above are just traditional webapp development, and next we are going to dapp development.
 
@@ -104,9 +104,9 @@ All above are just traditional webapp development, and next we are going to dapp
 
 This step instructs how to have a Dapp running on Nervos Appchain.
 
-The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` can be accessed at [@nervos/chain](https://www.npmjs.com/package/@nervos/chain)
+The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` can be accessed at [@appchain/base](https://www.npmjs.com/package/@appchain/base)
 
-In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @nervos/chain`, and then instantiate `nervos` in `src/appchain.js`.
+In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @appchain/base`, and then instantiate `nervos` in `src/appchain.js`.
 
 ```javascript
 const { default: Nervos } = require('@nervos/chain')
@@ -123,7 +123,7 @@ module.exports = nervos
 
 ## 4. Smart Contract
 
-This Dapp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/SimpleStore.sol).
+This Dapp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
 
 ```solidity
 pragma solidity 0.4.24;
@@ -183,11 +183,11 @@ Create directory in `src`
 │   └── transaction.js
 ```
 
-- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/SimpleStore.sol)
+- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol)
 
-- Store **bytecode** and **abi** in [compiled.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/compiled.js)
+- Store **bytecode** and **abi** in [compiled.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/compiled.js)
 
-- Store transaction template in [transaction.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/transaction.js)
+- Store transaction template in [transaction.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/transaction.js)
 
   ```javascript
   const appchain = require('../appchain')
@@ -205,7 +205,7 @@ Create directory in `src`
   module.exports = transaction
   ```
 
-- Store deploy script in [deploy.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/deploy.js)
+- Store deploy script in [deploy.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/deploy.js)
 
   ```javascript
   const appchain = require('../appchain')
@@ -250,7 +250,7 @@ Create directory in `src`
     .catch(err => console.error(err))
   ```
 
-- Store test script in [contracts.test.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/contracts.test.js)
+- Store test script in [contracts.test.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
 
   ```javascript
   const appchain = require('../appchain')
@@ -285,7 +285,7 @@ Create directory in `src`
   }, 3000)
   ```
 
-- Add deploy and test script in [package.json](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/package.json)
+- Add deploy and test script in [package.json](https://github.com/cryptape/first-forever-demo/tree/develop/package.json)
 
   ```json
   "scripts": {
@@ -323,7 +323,7 @@ Create directory in `src`
 
 ### Instantiate Contract
 
-Instantiate Contract in [simpleStore.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/simpleStore.js) under `src`
+Instantiate Contract in [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js) under `src`
 
 ```javascript
 const appchain = require('./nervos')
