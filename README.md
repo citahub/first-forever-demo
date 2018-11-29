@@ -2,9 +2,14 @@
 
 This demo shows the entire process of building a MVP Dapp on Appchain.
 
+We provider three situations：
+* [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser)
+* [run in neuronWeb](#run-in-neuronweb) 
+* [run in neuron wallet App](#run-in-neuron-wallet-app)
+
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
-# So, how simple the Dapp is?
+# Run in PC and mobile browser
 
 All interactions with Smart Contract are:
 
@@ -196,7 +201,7 @@ Create directory in `src`
   const transaction = {
     from: appchain.base.accounts.wallet[0].address,
     privateKey: appchain.base.accounts.wallet[0].privateKey,
-    nonce: 999999,
+    nonce: '123abcXYZ',
     quota: 1000000,
     chainId: 1,
     version: 0,
@@ -433,7 +438,7 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 
 [neuronWeb](https://github.com/cryptape/appchain.js/tree/develop/packages/neuron-web) is an AppChain Debugger on Chrome, acts as an AppChain Wallet to sign transactions from DApp.
 
-## Integrate NeuronWeb and Remove Account From Nervos SDK
+## Integrate NeuronWeb and Remove Account From AppChain SDK
 
 ```javascript
 // src/appchain.js
@@ -447,10 +452,10 @@ const config = require('./config')
 const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
 const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
-// appchain.base.accounts.wallet.add(account) // add account to nervos
+// appchain.base.accounts.wallet.add(account) // add account to appchain
 window.addEventListener('neuronWebReady', () => {
   if (window.addMessenger) {
-    window.addMessenger(nervos)
+    window.addMessenger(appchain)
   }
 })
 
@@ -478,7 +483,7 @@ const appchain = require('../appchain')
 const transaction = {
   // from: appchain.base.accounts.wallet[0].address,
   // privateKey: appchain.base.accounts.wallet[0].privateKey,
-  nonce: 999999,
+  nonce: '123abcXYZ',
   quota: 1000000,
   chainId: 1,
   version: 0,
@@ -516,3 +521,82 @@ from: appchain.base.defaultAccount,
 ```
 
 After these modification, first-forever will work with neuronWeb perfectly.
+
+# Run in neuron wallet App
+
+Neuron is a blockchain wallet APP which supports AppChain and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/neuron-android) and [iOS](https://github.com/cryptape/neuron-ios).
+
+You just update little code to adapter Neuron (Android and iOS).
+
+## Integrate Neuron and Remove Account From AppChain SDK
+
+You should update `appchain.js` firstly.
+
+```javascript
+
+const { default: AppChain } = require("@appchain/base");
+
+// Neuron will provider appchain object to dapp browser and dapp just update currentProivder and host
+if (typeof window.appchain !== "undefined") {
+  window.appchain = AppChain(window.appchain.currentProvider);
+  window.appchain.currentProvider.setHost(config.chain);
+} else {
+  console.log("No appchain? You should consider trying Neuron!");
+  window.appchain = AppChain(config.chain);
+}
+var appchain = window.appchain;
+
+module.exports = appchain;
+
+```
+## Remove Account-related Fields From Transaction Template
+
+```javascript
+// src/contracts/transaction.js
+
+const appchain = require('../appchain')
+const transaction = {
+  nonce: '123abcXYZ',          
+  quota: 1000000,   // 10000 or 0xffff
+  chainId: 1,
+  version: 0,
+  validUntilBlock: 999999,
+  value: '0x0',
+}
+
+module.exports = transaction
+```
+
+## Get Default Account From Neuron App
+
+```javascript
+// src/containers/add/index.jsx
+
+const tx = {
+  ...transaction,
+  from: window.neuron.getAccout(),
+  validUntilBlock: +current + 88,
+}
+```
+
+```javascript
+// src/containers/List/index.jsx
+
+// const from = appchain.base.accounts.wallet[0] ? appchain.base.accounts.wallet[0].address : ''
+const from = window.neuron.getAccout()
+```
+
+```javascript
+// src/containers/Show/index.jsx
+
+// from: appchain.base.accounts.wallet[0].address,
+from: window.neuron.getAccout(),
+```
+
+After these modification, first-forever will work with neuron App perfectly.
+
+If you have any mistakes in Android, you can debug in Chrome browser and input `chrome://inspect`.
+
+If you want to debug in iOS , you can debug in Safari browser. 
+
+> Note: If you want to debug, you should download Android or iOS neuron project and build , install.
