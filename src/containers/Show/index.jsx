@@ -1,5 +1,5 @@
 import React from 'react'
-import nervos from '../../nervos'
+import appchain from '../../appchain'
 import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
 require('./show.css')
@@ -17,8 +17,8 @@ class Show extends React.Component {
       simpleStoreContract.methods
         .get(time)
         .call({
-          // from: nervos.appchain.accounts.wallet[0].address,
-          from: nervos.appchain.defaultAccount,
+          // from: appchain.base.accounts.wallet[0].address,
+          from: appchain.base.defaultAccount,
         })
         .then(text => {
           this.setState({ time, text })
