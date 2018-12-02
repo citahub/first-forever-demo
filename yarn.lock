@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@nervos/chain@^0.17.4":
-  version "0.17.18"
-  resolved "https://registry.npmjs.org/@nervos/chain/-/chain-0.17.18.tgz#49be7d4e1a51209e2c5bfe482587aa6b0489cfe4"
-  integrity sha512-CrWRS21OUl+2P3ce8wVRXyL6GNx70TGvJy0IhuH8Cbh24MBoYO9K194L+FQ+9pEWJtnZC49Er6rYuO+3LJ5JgQ==
+"@appchain/base@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/@appchain/base/-/base-0.20.0.tgz#7a77542a22f3289e112d0184113d7bc07f0a896c"
+  integrity sha512-JeP6RCU4DCcOwDVL+knvP2tqWGlnFK46P4QFF3xU0xBl8eATlvRJbQnjLh3hhGAZ7wgvL/GVU/38oA8OSuiRtw==
   dependencies:
-    "@nervos/signer" "^1.0.33"
+    "@appchain/signer" "^2.0.1"
     web3 "^1.0.0-beta.34"
 
-"@nervos/signer@^1.0.33":
-  version "1.0.33"
-  resolved "https://registry.npmjs.org/@nervos/signer/-/signer-1.0.33.tgz#5a2be31a01ddb5c9c0b2dfefb54957adb818ceca"
-  integrity sha512-sx9vBnUCCxrvJ3hVLewSCeEqe5zHPBDdvsVa92n9xeDazEXsbVxHDZ8qus2mn/dAKCoQ8xRgius2o9PhpGLJBg==
+"@appchain/signer@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/@appchain/signer/-/signer-2.0.1.tgz#d20bfe4ea8fe9172b1f30df0a227effee0b697ec"
+  integrity sha512-dHA/cVP33j858oMBOK8qiC0N9KWhEanPoXEbFmuJ0kkfOnWAzlFTopHMTDXD8+KhkkHGQVery59sFbZoNwEZxA==
   dependencies:
     ec "^0.0.1"
     elliptic "^6.4.0"
