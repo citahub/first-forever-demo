@@ -9,6 +9,8 @@ We provider three situations：
 
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
+Before you start a tourist, you may need to install [node.js](https://nodejs.org) firstly. 
+
 # Run in PC and mobile browser
 
 All interactions with Smart Contract are:
