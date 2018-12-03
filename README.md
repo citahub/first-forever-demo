@@ -9,6 +9,8 @@ We provider three situations：
 
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
+Before you start a tourist, you may need to install [node.js](https://nodejs.org) firstly. 
+
 # Run in PC and mobile browser
 
 All interactions with Smart Contract are:
@@ -528,9 +530,37 @@ Neuron is a blockchain wallet APP which supports AppChain and Ethereum, it conta
 
 You just update little code to adapter Neuron (Android and iOS).
 
+## Add manifest.json and set manifest path in html link tag
+
+An AppChain DApp need to tell Neuron wallet some information of blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+
+As follows, we provider an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
+
+If you have more than one chains, you should set more pairs of chain id and node httpprovider in chain set.
+
+```javascript
+// public/manifest.json
+
+{
+  "name": "AppChain First Forever",                              // chain name
+  "blockViewer": "https://microscope.cryptape.com/",             // blockchain browser
+  "chainSet": {                                                 // a set of chainId and node httpprovider
+    "1": "https://node.cryptape.com"                            // key is chainId, value is node httpprovider
+  },
+  "icon": "http://7xq40y.com1.z0.glb.clouddn.com/23.pic.jpg",   // chain icon
+  "entry": "https://first-forever.dapp.cryptape.com/",          // DApp entry
+  "provider": "https://cryptape.com/"                           // DApp provider
+}
+```
+You should also set path of manifest.json in html file using link tag.
+
+```html
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+```
+
 ## Integrate Neuron and Remove Account From AppChain SDK
 
-You should update `appchain.js` firstly.
+Then you also should update `appchain.js`.
 
 ```javascript
 
