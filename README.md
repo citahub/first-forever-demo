@@ -9,6 +9,8 @@ We provider three situations：
 
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
+Before you start a tour, you may need to install [node.js](https://nodejs.org) firstly. 
+
 # Run in PC and mobile browser
 
 All interactions with Smart Contract are:
@@ -530,11 +532,11 @@ You just update little code to adapter Neuron (Android and iOS).
 
 ## Add manifest.json and set manifest path in html link tag
 
-An AppChain DApp need to tell Neuron wallet some information of blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+An AppChain DApp needs to tell Neuron wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
 
-As follows, we provider an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
+As follows, we provide an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
 
-If you have more than one chains, you should set more pairs of chain id and node httpprovider in chain set.
+If you have more than one chain, you should set more pairs of chain id and node httpprovider in chain set.
 
 ```javascript
 // public/manifest.json
