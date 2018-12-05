@@ -3,13 +3,14 @@
 This demo shows the entire process of building a MVP Dapp on Appchain.
 
 We provider three situations：
-* [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser)
-* [run in neuronWeb](#run-in-neuronweb) 
-* [run in neuron wallet App](#run-in-neuron-wallet-app)
+
+- [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser)
+- [run in neuronWeb](#run-in-neuronweb)
+- [run in neuron wallet App](#run-in-neuron-wallet-app)
 
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
-Before you start a tour, you may need to install [node.js](https://nodejs.org) firstly. 
+Before you start a tour, you may need to install [node.js](https://nodejs.org) firstly.
 
 # Run in PC and mobile browser
 
@@ -116,9 +117,7 @@ The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` ca
 In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @appchain/base`, and then instantiate `nervos` in `src/appchain.js`.
 
 ```javascript
-const {
-  default: AppChain
-} = require('@appchain/base')
+const { default: AppChain } = require('@appchain/base')
 
 const config = require('./config')
 
@@ -206,7 +205,7 @@ Create directory in `src`
     nonce: '123abcXYZ',
     quota: 1000000,
     chainId: 1,
-    version: 0,
+    version: 1,
     validUntilBlock: 999999,
     value: '0x0',
   }
@@ -445,9 +444,7 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 ```javascript
 // src/appchain.js
 
-const {
-  default: AppChain
-} = require('@appchain/base')
+const { default: AppChain } = require('@appchain/base')
 
 const config = require('./config')
 
@@ -488,7 +485,7 @@ const transaction = {
   nonce: '123abcXYZ',
   quota: 1000000,
   chainId: 1,
-  version: 0,
+  version: 1,
   validUntilBlock: 999999,
   value: '0x0',
 }
@@ -551,10 +548,11 @@ If you have more than one chain, you should set more pairs of chain id and node 
   "provider": "https://cryptape.com/"                           // DApp provider
 }
 ```
+
 You should also set path of manifest.json in html file using link tag.
 
 ```html
-<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 ```
 
 ## Integrate Neuron and Remove Account From AppChain SDK
@@ -562,22 +560,21 @@ You should also set path of manifest.json in html file using link tag.
 Then you also should update `appchain.js`.
 
 ```javascript
-
-const { default: AppChain } = require("@appchain/base");
+const { default: AppChain } = require('@appchain/base')
 
 // Neuron will provider appchain object to dapp browser and dapp just update currentProivder and host
-if (typeof window.appchain !== "undefined") {
-  window.appchain = AppChain(window.appchain.currentProvider);
-  window.appchain.currentProvider.setHost(config.chain);
+if (typeof window.appchain !== 'undefined') {
+  window.appchain = AppChain(window.appchain.currentProvider)
+  window.appchain.currentProvider.setHost(config.chain)
 } else {
-  console.log("No appchain? You should consider trying Neuron!");
-  window.appchain = AppChain(config.chain);
+  console.log('No appchain? You should consider trying Neuron!')
+  window.appchain = AppChain(config.chain)
 }
-var appchain = window.appchain;
+var appchain = window.appchain
 
-module.exports = appchain;
-
+module.exports = appchain
 ```
+
 ## Remove Account-related Fields From Transaction Template
 
 ```javascript
@@ -585,10 +582,10 @@ module.exports = appchain;
 
 const appchain = require('../appchain')
 const transaction = {
-  nonce: '123abcXYZ',          
-  quota: 1000000,   // 10000 or 0xffff
+  nonce: '123abcXYZ',
+  quota: 1000000, // 10000 or 0xffff
   chainId: 1,
-  version: 0,
+  version: 1,
   validUntilBlock: 999999,
   value: '0x0',
 }
@@ -626,6 +623,6 @@ After these modification, first-forever will work with neuron App perfectly.
 
 If you have any mistakes in Android, you can debug in Chrome browser and input `chrome://inspect`.
 
-If you want to debug in iOS , you can debug in Safari browser. 
+If you want to debug in iOS , you can debug in Safari browser.
 
 > Note: If you want to debug, you should download Android or iOS neuron project and build , install.
