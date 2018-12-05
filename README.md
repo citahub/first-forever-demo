@@ -1,10 +1,18 @@
-# Demo1: First Forever
+# First Forever
 
 This demo shows the entire process of building a MVP Dapp on Appchain.
 
+We provider three situations：
+
+- [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser)
+- [run in neuronWeb](#run-in-neuronweb)
+- [run in neuron wallet App](#run-in-neuron-wallet-app)
+
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
-# So, how simple the Dapp is?
+Before you start a tour, you may need to install [node.js](https://nodejs.org) firstly.
+
+# Run in PC and mobile browser
 
 All interactions with Smart Contract are:
 
@@ -82,7 +90,7 @@ Now the project looks like
 
 ## 2. Add Components of the Dapp
 
-This step is very familiar to webapp developers, [Route](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/Routes.jsx), [Containers](https://github.com/cryptape/dapp-demos/tree/develop/first-forever/src/containers) and [Components](https://github.com/cryptape/dapp-demos/tree/develop/first-forever/src/components) will be added to the Dapp
+This step is very familiar to webapp developers, [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) will be added to the Dapp
 
 ```shell
 └── src
@@ -93,10 +101,10 @@ This step is very familiar to webapp developers, [Route](https://github.com/cryp
 
 The Route indicates that the demo has 4 pages:
 
-- [Homepage](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/containers/Home/index.jsx)
-- [AddMemo](https://github.com/cryptape/dapp-demos/tree/develop/first-forever/src/containers/Add/index.jsx)
-- [MemoList](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/containers/List/index.jsx)
-- [Memo](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/containers/Show/index.jsx)
+- [Homepage](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Home/index.jsx)
+- [AddMemo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Add/index.jsx)
+- [MemoList](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/List/index.jsx)
+- [Memo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
 
 All above are just traditional webapp development, and next we are going to dapp development.
 
@@ -104,26 +112,26 @@ All above are just traditional webapp development, and next we are going to dapp
 
 This step instructs how to have a Dapp running on Nervos Appchain.
 
-The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` can be accessed at [@nervos/chain](https://www.npmjs.com/package/@nervos/chain)
+The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` can be accessed at [@appchain/base](https://www.npmjs.com/package/@appchain/base)
 
-In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @nervos/chain`, and then instantiate `nervos` in `src/appchain.js`.
+In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @appchain/base`, and then instantiate `nervos` in `src/appchain.js`.
 
 ```javascript
-const { default: Nervos } = require('@nervos/chain')
+const { default: AppChain } = require('@appchain/base')
 
 const config = require('./config')
 
-const appchain = Nervos(config.chain) // config.chain indicates that the address of Appchain to interact
+const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
 const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
-appchain.base.accounts.wallet.add(account) // add account to nervos
+appchain.base.accounts.wallet.add(account) // add account to appchain
 
-module.exports = nervos
+module.exports = appchain
 ```
 
 ## 4. Smart Contract
 
-This Dapp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/SimpleStore.sol).
+This Dapp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
 
 ```solidity
 pragma solidity 0.4.24;
@@ -158,7 +166,7 @@ contract SimpleStore {
 }
 ```
 
-Smart Contract can be debugged on [Remix](https://remix.ethereum.org/), an online solidity debugger
+Smart Contract can be debugged on [Appchain-ide](https://appchain-ide.cryptape.com/), an online solidity debugger
 
 ![remix](https://cdn.cryptape.com/docs/images/remix.png)
 
@@ -183,21 +191,21 @@ Create directory in `src`
 │   └── transaction.js
 ```
 
-- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/SimpleStore.sol)
+- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol)
 
-- Store **bytecode** and **abi** in [compiled.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/compiled.js)
+- Store **bytecode** and **abi** in [compiled.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/compiled.js)
 
-- Store transaction template in [transaction.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/transaction.js)
+- Store transaction template in [transaction.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/transaction.js)
 
   ```javascript
   const appchain = require('../appchain')
   const transaction = {
     from: appchain.base.accounts.wallet[0].address,
     privateKey: appchain.base.accounts.wallet[0].privateKey,
-    nonce: 999999,
+    nonce: '123abcXYZ',
     quota: 1000000,
     chainId: 1,
-    version: 0,
+    version: 1,
     validUntilBlock: 999999,
     value: '0x0',
   }
@@ -205,7 +213,7 @@ Create directory in `src`
   module.exports = transaction
   ```
 
-- Store deploy script in [deploy.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/deploy.js)
+- Store deploy script in [deploy.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/deploy.js)
 
   ```javascript
   const appchain = require('../appchain')
@@ -250,7 +258,7 @@ Create directory in `src`
     .catch(err => console.error(err))
   ```
 
-- Store test script in [contracts.test.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/contracts/contracts.test.js)
+- Store test script in [contracts.test.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
 
   ```javascript
   const appchain = require('../appchain')
@@ -285,7 +293,7 @@ Create directory in `src`
   }, 3000)
   ```
 
-- Add deploy and test script in [package.json](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/package.json)
+- Add deploy and test script in [package.json](https://github.com/cryptape/first-forever-demo/tree/develop/package.json)
 
   ```json
   "scripts": {
@@ -323,7 +331,7 @@ Create directory in `src`
 
 ### Instantiate Contract
 
-Instantiate Contract in [simpleStore.js](https://github.com/cryptape/dapp-demos/blob/develop/first-forever/src/simpleStore.js) under `src`
+Instantiate Contract in [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js) under `src`
 
 ```javascript
 const appchain = require('./nervos')
@@ -431,26 +439,26 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 
 [neuronWeb](https://github.com/cryptape/appchain.js/tree/develop/packages/neuron-web) is an AppChain Debugger on Chrome, acts as an AppChain Wallet to sign transactions from DApp.
 
-## Integrate NeuronWeb and Remove Account From Nervos SDK
+## Integrate NeuronWeb and Remove Account From AppChain SDK
 
 ```javascript
 // src/appchain.js
 
-const { default: Nervos } = require('@nervos/chain')
+const { default: AppChain } = require('@appchain/base')
 
 const config = require('./config')
 
-const appchain = Nervos(config.chain) // config.chain indicates that the address of Appchain to interact
+const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
 const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
-// appchain.base.accounts.wallet.add(account) // add account to nervos
+// appchain.base.accounts.wallet.add(account) // add account to appchain
 window.addEventListener('neuronWebReady', () => {
   if (window.addMessenger) {
-    window.addMessenger(nervos)
+    window.addMessenger(appchain)
   }
 })
 
-module.exports = nervos
+module.exports = appchain
 ```
 
 ## Render App After NeuronWeb Integration
@@ -474,10 +482,10 @@ const appchain = require('../appchain')
 const transaction = {
   // from: appchain.base.accounts.wallet[0].address,
   // privateKey: appchain.base.accounts.wallet[0].privateKey,
-  nonce: 999999,
+  nonce: '123abcXYZ',
   quota: 1000000,
   chainId: 1,
-  version: 0,
+  version: 1,
   validUntilBlock: 999999,
   value: '0x0',
 }
@@ -512,3 +520,109 @@ from: appchain.base.defaultAccount,
 ```
 
 After these modification, first-forever will work with neuronWeb perfectly.
+
+# Run in neuron wallet App
+
+Neuron is a blockchain wallet APP which supports AppChain and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/neuron-android) and [iOS](https://github.com/cryptape/neuron-ios).
+
+You just update little code to adapter Neuron (Android and iOS).
+
+## Add manifest.json and set manifest path in html link tag
+
+An AppChain DApp needs to tell Neuron wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+
+As follows, we provide an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
+If you have more than one chain, you should set more pairs of chain id and node httpprovider in chain set.
+
+```javascript
+// public/manifest.json
+
+{
+  "name": "AppChain First Forever",                              // chain name
+  "blockViewer": "https://microscope.cryptape.com/",             // blockchain browser
+  "chainSet": {                                                 // a set of chainId and node httpprovider
+    "1": "https://node.cryptape.com"                            // key is chainId, value is node httpprovider
+  },
+  "icon": "http://7xq40y.com1.z0.glb.clouddn.com/23.pic.jpg",   // chain icon
+  "entry": "https://first-forever.dapp.cryptape.com/",          // DApp entry
+  "provider": "https://cryptape.com/"                           // DApp provider
+}
+```
+
+You should also set path of manifest.json in html file using link tag.
+
+```html
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+```
+
+## Integrate Neuron and Remove Account From AppChain SDK
+
+Then you also should update `appchain.js`.
+
+```javascript
+const { default: AppChain } = require('@appchain/base')
+
+// Neuron will provider appchain object to dapp browser and dapp just update currentProivder and host
+if (typeof window.appchain !== 'undefined') {
+  window.appchain = AppChain(window.appchain.currentProvider)
+  window.appchain.currentProvider.setHost(config.chain)
+} else {
+  console.log('No appchain? You should consider trying Neuron!')
+  window.appchain = AppChain(config.chain)
+}
+var appchain = window.appchain
+
+module.exports = appchain
+```
+
+## Remove Account-related Fields From Transaction Template
+
+```javascript
+// src/contracts/transaction.js
+
+const appchain = require('../appchain')
+const transaction = {
+  nonce: '123abcXYZ',
+  quota: 1000000, // 10000 or 0xffff
+  chainId: 1,
+  version: 1,
+  validUntilBlock: 999999,
+  value: '0x0',
+}
+
+module.exports = transaction
+```
+
+## Get Default Account From Neuron App
+
+```javascript
+// src/containers/add/index.jsx
+
+const tx = {
+  ...transaction,
+  from: window.neuron.getAccout(),
+  validUntilBlock: +current + 88,
+}
+```
+
+```javascript
+// src/containers/List/index.jsx
+
+// const from = appchain.base.accounts.wallet[0] ? appchain.base.accounts.wallet[0].address : ''
+const from = window.neuron.getAccout()
+```
+
+```javascript
+// src/containers/Show/index.jsx
+
+// from: appchain.base.accounts.wallet[0].address,
+from: window.neuron.getAccout(),
+```
+
+After these modification, first-forever will work with neuron App perfectly.
+
+If you have any mistakes in Android, you can debug in Chrome browser and input `chrome://inspect`.
+
+If you want to debug in iOS , you can debug in Safari browser.
+
+> Note: If you want to debug, you should download Android or iOS neuron project and build , install.
