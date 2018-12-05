@@ -1,12 +1,11 @@
 import React from 'react'
-import logo from '../../public/images/logo.svg'
 import BottomNav from '../../components/BottomNav'
 import './home.css'
 
 const Home = () => (
   <div>
     <div className="home__logo--container">
-      <img src={logo} alt="logo" />
+      <img src={`${process.env.PUBLIC_URL}/images/logo.svg`} alt="logo" />
       <span className="home__logo--text">First Forever </span>
     </div>
     <div className="home__slogan--container">
