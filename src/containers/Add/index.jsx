@@ -27,37 +27,34 @@ class Add extends React.Component {
   }
   handleSubmit = e => {
     const { time, text } = this.state
-    appchain.base
-      .getBlockNumber()
-      .then(current => {
-        const tx = {
-          ...transaction,
-          from: window.neuron.getAccount(), 
-          validUntilBlock: +current + 88,
-        }
-        this.setState({
-          submitText: submitTexts.submitting,
-        })
-        var that = this
-        simpleStoreContract.methods.add(text, +time).send(tx, function(err, res) {
-          console.log("simpleStoreContract response", res)
-          if (typeof res === 'string') {
-            res = JSON.parse(res)
-          }
-          if (res.hash) {
-            appchain.listeners.listenToTransactionReceipt(res.hash)
-              .then(receipt => {
-                if (!receipt.errorMessage) { 
-                  that.setState({ submitText: submitTexts.submitted })
-                } else {
-                  throw new Error(receipt.errorMessage)
-                }
-              })
-          } else {
-            that.setState({ submitText: submitTexts.normal })
-          }
-        })
+    appchain.base.getBlockNumber().then(current => {
+      const tx = {
+        ...transaction,
+        from: window.neuron.getAccount(),
+        validUntilBlock: +current + 88,
+      }
+      this.setState({
+        submitText: submitTexts.submitting,
       })
+      var that = this
+      simpleStoreContract.methods.add(text, +time).send(tx, function(err, res) {
+        console.log('simpleStoreContract response', res)
+        if (typeof res === 'string') {
+          res = JSON.parse(res)
+        }
+        if (res.hash) {
+          appchain.listeners.listenToTransactionReceipt(res.hash).then(receipt => {
+            if (!receipt.errorMessage) {
+              that.setState({ submitText: submitTexts.submitted })
+            } else {
+              throw new Error(receipt.errorMessage)
+            }
+          })
+        } else {
+          that.setState({ submitText: submitTexts.normal })
+        }
+      })
+    })
   }
   render() {
     const { time, text, submitText, errorText } = this.state

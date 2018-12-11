@@ -48,6 +48,6 @@ appchain.base
   })
   .then(res => {
     if (res.errorMessage) throw new Error(res.errorMessage)
-    return appchain.base.getAbi(_contractAddress).then(console.log) // get abi from the chain
+    return appchain.base.getAbi(_contractAddress, 'pending').then(console.log) // get abi from the chain
   })
   .catch(err => console.error(err))
