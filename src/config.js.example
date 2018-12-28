@@ -1,5 +1,5 @@
 const config = {
-  chain: 'http://localhost:1337',
+  chain: 'https://node.cryptape.com',
   privateKey: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
   contractAddress: ''
 }
