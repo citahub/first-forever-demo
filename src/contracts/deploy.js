@@ -1,4 +1,4 @@
-const appchain = require('../appchain')
+const cita = require('../cita')
 const {
   abi,
   bytecode
@@ -14,9 +14,9 @@ transaction = {
 
 let _contractAddress = ''
 // contract contract instance
-const myContract = new appchain.base.Contract(abi)
+const myContract = new cita.base.Contract(abi)
 
-appchain.base
+cita.base
   .getBlockNumber()
   .then(current => {
     transaction.validUntilBlock = +current + 88 // update transaction.validUntilBlock
@@ -31,7 +31,7 @@ appchain.base
   .then(txRes => {
     if (txRes.hash) {
       // get transaction receipt
-      return appchain.listeners.listenToTransactionReceipt(txRes.hash)
+      return cita.listeners.listenToTransactionReceipt(txRes.hash)
     } else {
       throw new Error('No Transaction Hash Received')
     }
@@ -44,10 +44,10 @@ appchain.base
     if (errorMessage) throw new Error(errorMessage)
     console.log(`contractAddress is: ${contractAddress}`)
     _contractAddress = contractAddress
-    return appchain.base.storeAbi(contractAddress, abi, transaction) // store abi on the chain
+    return cita.base.storeAbi(contractAddress, abi, transaction) // store abi on the chain
   })
   .then(res => {
     if (res.errorMessage) throw new Error(res.errorMessage)
-    return appchain.base.getAbi(_contractAddress, 'pending').then(console.log) // get abi from the chain
+    return cita.base.getAbi(_contractAddress, 'pending').then(console.log) // get abi from the chain
   })
   .catch(err => console.error(err))
