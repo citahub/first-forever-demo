@@ -1,5 +1,5 @@
 import React from 'react'
-import appchain from '../../appchain'
+import cita from '../../cita'
 import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
 require('./show.css')
@@ -17,8 +17,8 @@ class Show extends React.Component {
       simpleStoreContract.methods
         .get(time)
         .call({
-          // from: appchain.base.accounts.wallet[0].address,
-          from: appchain.base.defaultAccount,
+          // from: cita.base.accounts.wallet[0].address,
+          from: cita.base.defaultAccount,
         })
         .then(text => {
           this.setState({ time, text })

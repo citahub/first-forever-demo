@@ -3,7 +3,7 @@ import Submit from '../../components/Submit'
 import BottomNav from '../../components/BottomNav'
 import './add.css'
 import { transaction, simpleStoreContract } from '../../simpleStore'
-import appchain from '../../appchain'
+import cita from '../../cita'
 
 const timeFormatter = time => ('' + time).padStart(2, '0')
 
@@ -27,7 +27,7 @@ class Add extends React.Component {
   }
   handleSubmit = e => {
     const { time, text } = this.state
-    appchain.base
+    cita.base
       .getBlockNumber()
       .then(current => {
         const tx = {
@@ -41,7 +41,7 @@ class Add extends React.Component {
       })
       .then(res => {
         if (res.hash) {
-          return appchain.listeners.listenToTransactionReceipt(res.hash)
+          return cita.listeners.listenToTransactionReceipt(res.hash)
         } else {
           throw new Error('No Transaction Hash Received')
         }

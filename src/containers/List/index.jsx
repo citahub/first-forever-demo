@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
-import appchain from '../../appchain'
+import cita from '../../cita'
 require('./list.css')
 
 const Record = ({ time, text, hasYearLabel }) => {
@@ -24,9 +24,7 @@ class List extends React.Component {
     texts: [],
   }
   componentDidMount() {
-    const from = appchain.base.accounts.wallet[0]
-      ? appchain.base.accounts.wallet[0].address
-      : appchain.base.defaultAccount
+    const from = cita.base.accounts.wallet[0] ? cita.base.accounts.wallet[0].address : cita.base.defaultAccount
     simpleStoreContract.methods
       .getList()
       .call({

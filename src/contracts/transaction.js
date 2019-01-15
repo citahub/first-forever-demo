@@ -1,7 +1,7 @@
-const appchain = require('../appchain')
+const cita = require('../cita')
 const transaction = {
-  from: appchain.base.accounts.wallet[0].address,
-  privateKey: appchain.base.accounts.wallet[0].privateKey,
+  from: cita.base.accounts.wallet[0].address,
+  privateKey: cita.base.accounts.wallet[0].privateKey,
   nonce: 999999,
   quota: 1000000,
   chainId: 1,

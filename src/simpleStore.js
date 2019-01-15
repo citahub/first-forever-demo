@@ -1,4 +1,4 @@
-const appchain = require('./appchain')
+const cita = require('./cita')
 const {
   abi
 } = require('./contracts/compiled.js')
@@ -7,7 +7,7 @@ const {
 } = require('./config')
 
 const transaction = require('./contracts/transaction')
-const simpleStoreContract = new appchain.base.Contract(abi, contractAddress)
+const simpleStoreContract = new cita.base.Contract(abi, contractAddress)
 module.exports = {
   transaction,
   simpleStoreContract,

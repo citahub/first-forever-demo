@@ -1,6 +1,6 @@
 # First Forever
 
-This demo shows the entire process of building a MVP Dapp on Appchain.
+This demo shows the entire process of building a MVP Dapp on cita.
 
 We provider three situations：
 
@@ -43,7 +43,7 @@ The final project looks like
 │   ├── index.css
 │   ├── index.js
 │   ├── logo.svg
-│   ├── appchain.js
+│   ├── cita.js
 │   ├── public
 │   ├── registerServiceWorker.js
 │   └── simpleStore.js
@@ -108,25 +108,25 @@ The Route indicates that the demo has 4 pages:
 
 All above are just traditional webapp development, and next we are going to dapp development.
 
-## 3. appchain.js
+## 3. cita.js
 
-This step instructs how to have a Dapp running on Nervos Appchain.
+This step instructs how to have a Dapp running on Nervos cita.
 
-The Dapp interacts with Appchain by the `appchain.js` and details of `nervos` can be accessed at [@appchain/base](https://www.npmjs.com/package/@appchain/base)
+The Dapp interacts with CITA by the `cita.js` and details of `cita` can be accessed at [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
 
-In order to use appchain.js, add appchain.js as other packages by yarn `yarn add @appchain/base`, and then instantiate `nervos` in `src/appchain.js`.
+In order to use cita.js, add cita-sdk as other packages by yarn `yarn add @cryptape/cita-sdk`, and then instantiate `cita` in `src/cita.js`.
 
 ```javascript
-const { default: AppChain } = require('@appchain/base')
+const { default: CITASDK } = require('@cryptape/cita-sdk')
 
 const config = require('./config')
 
-const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
-const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
+const cita = CITASDK(config.chain) // config.chain indicates that the address of CITA to interact
+const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
-appchain.base.accounts.wallet.add(account) // add account to appchain
+cita.base.accounts.wallet.add(account) // add account to cita
 
-module.exports = appchain
+module.exports = cita
 ```
 
 ## 4. Smart Contract
@@ -166,7 +166,7 @@ contract SimpleStore {
 }
 ```
 
-Smart Contract can be debugged on [Appchain-ide](https://appchain-ide.cryptape.com/), an online solidity debugger
+Smart Contract can be debugged on [CITA-IDE](https://appchain-ide.cryptape.com/), an online solidity debugger
 
 ![remix](https://cdn.cryptape.com/docs/images/remix.png)
 
@@ -198,10 +198,10 @@ Create directory in `src`
 - Store transaction template in [transaction.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/transaction.js)
 
   ```javascript
-  const appchain = require('../appchain')
+  const cita = require('../cita')
   const transaction = {
-    from: appchain.base.accounts.wallet[0].address,
-    privateKey: appchain.base.accounts.wallet[0].privateKey,
+    from: cita.base.accounts.wallet[0].address,
+    privateKey: cita.base.accounts.wallet[0].privateKey,
     nonce: '123abcXYZ',
     quota: 1000000,
     chainId: 1,
@@ -216,15 +216,15 @@ Create directory in `src`
 - Store deploy script in [deploy.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/deploy.js)
 
   ```javascript
-  const appchain = require('../appchain')
+  const cita = require('../cita')
   const { abi, bytecode } = require('./compiled.js')
 
   const transaction = require('./transaction')
   let _contractAddress = ''
   // contract contract instance
-  const myContract = new appchain.base.Contract(abi)
+  const myContract = new cita.base.Contract(abi)
 
-  appchain.base
+  cita.base
     .getBlockNumber()
     .then(current => {
       transaction.validUntilBlock = +current + 88 // update transaction.validUntilBlock
@@ -239,7 +239,7 @@ Create directory in `src`
     .then(txRes => {
       if (txRes.hash) {
         // get transaction receipt
-        return appchain.listeners.listenToTransactionReceipt(txRes.hash)
+        return cita.listeners.listenToTransactionReceipt(txRes.hash)
       } else {
         throw new Error('No Transaction Hash Received')
       }
@@ -249,11 +249,11 @@ Create directory in `src`
       if (errorMessage) throw new Error(errorMessage)
       console.log(`contractAddress is: ${contractAddress}`)
       _contractAddress = contractAddress
-      return appchain.base.storeAbi(contractAddress, abi, transaction) // store abi on the chain
+      return cita.base.storeAbi(contractAddress, abi, transaction) // store abi on the chain
     })
     .then(res => {
       if (res.errorMessage) throw new Error(res.errorMessage)
-      return appchain.base.getAbi(_contractAddress).then(console.log) // get abi from the chain
+      return cita.base.getAbi(_contractAddress).then(console.log) // get abi from the chain
     })
     .catch(err => console.error(err))
   ```
@@ -261,23 +261,23 @@ Create directory in `src`
 - Store test script in [contracts.test.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
 
   ```javascript
-  const appchain = require('../appchain')
+  const cita = require('../cita')
   const { abi } = require('./compiled')
   const { contractAddress } = require('../config')
   const transaction = require('./transaction')
 
-  const simpleStoreContract = new appchain.base.Contract(abi, contractAddress) // instantiate contract
+  const simpleStoreContract = new cita.base.Contract(abi, contractAddress) // instantiate contract
 
-  appchain.base.getBalance(appchain.base.accounts.wallet[0].address).then(console.log) // check balance of account
+  cita.base.getBalance(cita.base.accounts.wallet[0].address).then(console.log) // check balance of account
   console.log(`Interact with contract at ${contractAddress}`)
   const time = new Date().getTime()
   const text = 'hello world at ' + time
 
   test(`Add record of (${text}, ${time})`, async () => {
-    const current = await appchain.base.getBlockNumber()
+    const current = await cita.base.getBlockNumber()
     transaction.validUntilBlock = +current + 88 // update transaction.validUntilBlock
     const txResult = await simpleStoreContract.methods.add(text, time).send(transaction) // sendTransaction to the contract
-    const receipt = await appchain.listeners.listenToTransactionReceipt(txResult.hash) // listen to the receipt
+    const receipt = await cita.listeners.listenToTransactionReceipt(txResult.hash) // listen to the receipt
     expect(receipt.errorMessage).toBeNull()
   }, 10000)
 
@@ -334,12 +334,12 @@ Create directory in `src`
 Instantiate Contract in [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js) under `src`
 
 ```javascript
-const appchain = require('./nervos')
+const cita = require('./cita')
 const { abi } = require('./contracts/compiled.js')
 const { contractAddress } = require('./config')
 
 const transaction = require('./contracts/transaction')
-const simpleStoreContract = new appchain.base.Contract(abi, contractAddress)
+const simpleStoreContract = new cita.base.Contract(abi, contractAddress)
 module.exports = {
   transaction,
   simpleStoreContract,
@@ -353,7 +353,7 @@ In `src/containers/Add/index.jsx`, bind the following method to submit button
 ```javascript
 handleSubmit = e => {
   const { time, text } = this.state
-  appchain.base
+  cita.base
     .getBlockNumber()
     .then(current => {
       const tx = {
@@ -367,7 +367,7 @@ handleSubmit = e => {
     })
     .then(res => {
       if (res.hash) {
-        return appchain.listeners.listenToTransactionReceipt(res.hash)
+        return cita.listeners.listenToTransactionReceipt(res.hash)
       } else {
         throw new Error('No Transaction Hash Received')
       }
@@ -389,7 +389,7 @@ In `src/containers/List/index.jsx`, load memos on mount
 
 ```javascript
 componentDidMount() {
-  const from = appchain.base.accounts.wallet[0] ? appchain.base.accounts.wallet[0].address : ''
+  const from = cita.base.accounts.wallet[0] ? cita.base.accounts.wallet[0].address : ''
   simpleStoreContract.methods
     .getList()
     .call({
@@ -416,7 +416,7 @@ componentDidMount() {
     simpleStoreContract.methods
       .get(time)
       .call({
-        from: appchain.base.accounts.wallet[0].address,
+        from: cita.base.accounts.wallet[0].address,
       })
       .then(text => {
         this.setState({ time, text })
@@ -437,28 +437,28 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 
 # Run in neuronWeb
 
-[neuronWeb](https://github.com/cryptape/appchain.js/tree/develop/packages/neuron-web) is an AppChain Debugger on Chrome, acts as an AppChain Wallet to sign transactions from DApp.
+[cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) is an CITA Web Debugger on Chrome, acts as an CITA Wallet to sign transactions from DApp.
 
-## Integrate NeuronWeb and Remove Account From AppChain SDK
+## Integrate NeuronWeb and Remove Account From CITA SDK
 
 ```javascript
-// src/appchain.js
+// src/cita.js
 
-const { default: AppChain } = require('@appchain/base')
+const { default: CITASDK } = require('@cryptape/cita-sdk')
 
 const config = require('./config')
 
-const appchain = AppChain(config.chain) // config.chain indicates that the address of Appchain to interact
-const account = appchain.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
+const cita = CITASDK(config.chain) // config.chain indicates that the address of CITA to interact
+const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
-// appchain.base.accounts.wallet.add(account) // add account to appchain
-window.addEventListener('neuronWebReady', () => {
+// cita.base.accounts.wallet.add(account) // add account to cita
+window.addEventListener('citaWebDebuggerReader', () => {
   if (window.addMessenger) {
-    window.addMessenger(appchain)
+    window.addMessenger(cita)
   }
 })
 
-module.exports = appchain
+module.exports = cita
 ```
 
 ## Render App After NeuronWeb Integration
@@ -466,7 +466,7 @@ module.exports = appchain
 ```javascript
 // src/index.js
 
-window.addEventListener('neuronWebReady', () => {
+window.addEventListener('citaWebDebuggerReader', () => {
   setTimeout(() => {
     ReactDOM.render(<App />, document.getElementById('root'))
   }, 10)
@@ -478,10 +478,10 @@ window.addEventListener('neuronWebReady', () => {
 ```javascript
 // src/contracts/transaction.js
 
-const appchain = require('../appchain')
+const cita = require('../cita')
 const transaction = {
-  // from: appchain.base.accounts.wallet[0].address,
-  // privateKey: appchain.base.accounts.wallet[0].privateKey,
+  // from: cita.base.accounts.wallet[0].address,
+  // privateKey: cita.base.accounts.wallet[0].privateKey,
   nonce: '123abcXYZ',
   quota: 1000000,
   chainId: 1,
@@ -500,7 +500,7 @@ module.exports = transaction
 
 const tx = {
   ...transaction,
-  from: appchain.base.defaultAccount,
+  from: cita.base.defaultAccount,
   validUntilBlock: +current + 88,
 }
 ```
@@ -508,28 +508,28 @@ const tx = {
 ```javascript
 // src/containers/List/index.jsx
 
-// const from = appchain.base.accounts.wallet[0] ? appchain.base.accounts.wallet[0].address : ''
-const from = appchain.base.defaultAccount
+// const from = cita.base.accounts.wallet[0] ? cita.base.accounts.wallet[0].address : ''
+const from = cita.base.defaultAccount
 ```
 
 ```javascript
 // src/containers/Show/index.jsx
 
-// from: appchain.base.accounts.wallet[0].address,
-from: appchain.base.defaultAccount,
+// from: cita.base.accounts.wallet[0].address,
+from: cita.base.defaultAccount,
 ```
 
 After these modification, first-forever will work with neuronWeb perfectly.
 
 # Run in neuron wallet App
 
-Neuron is a blockchain wallet APP which supports AppChain and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/neuron-android) and [iOS](https://github.com/cryptape/neuron-ios).
+Neuron is a blockchain wallet APP which supports CITA and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/neuron-android) and [iOS](https://github.com/cryptape/neuron-ios).
 
 You just update little code to adapter Neuron (Android and iOS).
 
 ## Add manifest.json and set manifest path in html link tag
 
-An AppChain DApp needs to tell Neuron wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+An CITA DApp needs to tell Neuron wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
 
 As follows, we provide an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
 If you have more than one chain, you should set more pairs of chain id and node httpprovider in chain set.
@@ -538,7 +538,7 @@ If you have more than one chain, you should set more pairs of chain id and node 
 // public/manifest.json
 
 {
-  "name": "AppChain First Forever",                              // chain name
+  "name": "CITA First Forever",                              // chain name
   "blockViewer": "https://microscope.cryptape.com/",             // blockchain browser
   "chainSet": {                                                 // a set of chainId and node httpprovider
     "1": "https://node.cryptape.com"                            // key is chainId, value is node httpprovider
@@ -555,24 +555,24 @@ You should also set path of manifest.json in html file using link tag.
 <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 ```
 
-## Integrate Neuron and Remove Account From AppChain SDK
+## Integrate Neuron and Remove Account From CITA SDK
 
-Then you also should update `appchain.js`.
+Then you also should update `cita.js`.
 
 ```javascript
-const { default: AppChain } = require('@appchain/base')
+const { default: CITASDK } = require('@cryptape/cita-sdk')
 
-// Neuron will provider appchain object to dapp browser and dapp just update currentProivder and host
-if (typeof window.appchain !== 'undefined') {
-  window.appchain = AppChain(window.appchain.currentProvider)
-  window.appchain.currentProvider.setHost(config.chain)
+// Neuron will provider cita object to dapp browser and dapp just update currentProivder and host
+if (typeof window.cita !== 'undefined') {
+  window.cita = CITASDK(window.cita.currentProvider)
+  window.cita.currentProvider.setHost(config.chain)
 } else {
-  console.log('No appchain? You should consider trying Neuron!')
-  window.appchain = AppChain(config.chain)
+  console.log('No cita? You should consider trying Neuron!')
+  window.cita = CITASDK(config.chain)
 }
-var appchain = window.appchain
+var cita = window.cita
 
-module.exports = appchain
+module.exports = cita
 ```
 
 ## Remove Account-related Fields From Transaction Template
@@ -580,7 +580,7 @@ module.exports = appchain
 ```javascript
 // src/contracts/transaction.js
 
-const appchain = require('../appchain')
+const cita = require('../cita')
 const transaction = {
   nonce: '123abcXYZ',
   quota: 1000000, // 10000 or 0xffff
@@ -608,14 +608,14 @@ const tx = {
 ```javascript
 // src/containers/List/index.jsx
 
-// const from = appchain.base.accounts.wallet[0] ? appchain.base.accounts.wallet[0].address : ''
+// const from = cita.base.accounts.wallet[0] ? cita.base.accounts.wallet[0].address : ''
 const from = window.neuron.getAccout()
 ```
 
 ```javascript
 // src/containers/Show/index.jsx
 
-// from: appchain.base.accounts.wallet[0].address,
+// from: cita.base.accounts.wallet[0].address,
 from: window.neuron.getAccout(),
 ```
 
