@@ -3,8 +3,19 @@ const {
   abi,
   bytecode
 } = require('./compiled.js')
+const config = require('../config')
 
-const transaction = require('./transaction')
+const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
+
+cita.base.accounts.wallet.add(account) // add account to cita
+
+let transaction = require('./transaction')
+
+transaction = {
+  ...transaction,
+  from: cita.base.accounts.wallet[0].address
+}
+
 let _contractAddress = ''
 // contract contract instance
 const myContract = new cita.base.Contract(abi)

@@ -50,7 +50,7 @@ class Add extends React.Component {
         if (res.hash) {
           return cita.listeners.listenToTransactionReceipt(res.hash)
         } else {
-          throw new Error('No Transaction Hash Received')
+          throw new Error('Rejected or No Transaction Hash Received')
         }
       })
       .then(receipt => {
