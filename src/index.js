@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-import appchain from './appchain'
+import * as cita from './cita'
+const { REACT_APP_RUNTIME } = process.env
 
-window.addEventListener('neuronWebReady', () => {
-  window.addMessenger(appchain)
+if (REACT_APP_RUNTIME === 'web') {
   ReactDOM.render(<App />, document.getElementById('root'))
-})
-
-setTimeout(() => {
-  if (!window.addMessenger) {
-    window.console.warn('Neuron Web Not Detected')
+} else if (REACT_APP_RUNTIME === 'cita-web-debugger') {
+  window.addEventListener('citaWebDebuggerReady', () => {
+    window.addMessenger(cita)
     ReactDOM.render(<App />, document.getElementById('root'))
-  }
-}, 3000)
-
+  })
+}
 registerServiceWorker()

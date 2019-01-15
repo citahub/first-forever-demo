@@ -3,6 +3,7 @@ build
 
 # config
 config.js
+.env
 
 # deps
 node_modules

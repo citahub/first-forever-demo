@@ -5,6 +5,8 @@ import { simpleStoreContract } from '../../simpleStore'
 import cita from '../../cita'
 require('./list.css')
 
+const { REACT_APP_RUNTIME } = process.env
+
 const Record = ({ time, text, hasYearLabel }) => {
   const _time = new Date(+time)
   return (
@@ -24,7 +26,12 @@ class List extends React.Component {
     texts: [],
   }
   componentDidMount() {
-    const from = cita.base.accounts.wallet[0] ? cita.base.accounts.wallet[0].address : cita.base.defaultAccount
+    const from =
+      REACT_APP_RUNTIME === 'web'
+        ? cita.base.accounts.wallet[0].address
+        : REACT_APP_RUNTIME === 'cita-web-debugger'
+        ? cita.base.defaultAccount
+        : window.cython.getAccount() || ''
     simpleStoreContract.methods
       .getList()
       .call({

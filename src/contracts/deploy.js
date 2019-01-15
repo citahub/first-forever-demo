@@ -3,13 +3,17 @@ const {
   abi,
   bytecode
 } = require('./compiled.js')
+const config = require('../config')
+
+const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
+
+cita.base.accounts.wallet.add(account) // add account to cita
 
 let transaction = require('./transaction')
 
-// add transaction sender address
 transaction = {
   ...transaction,
-  from: nervos.appchain.accounts.wallet[0].address,
+  from: cita.base.accounts.wallet[0].address
 }
 
 let _contractAddress = ''

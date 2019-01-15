@@ -4,9 +4,9 @@ This demo shows the entire process of building a MVP Dapp on cita.
 
 We provider three situations：
 
-- [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser)
-- [run in neuronWeb](#run-in-neuronweb)
-- [run in neuron wallet App](#run-in-neuron-wallet-app)
+- [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser): set `REACT_APP_RUNTIME=web` in `.env`
+- [run in neuronWeb](#run-in-neuronweb): set `REACT_APP_RUNTIME=cita-web-debugger` in `.env`
+- [run in neuron wallet App](#run-in-neuron-wallet-app): set `REACT_APP_RUNTIME=cyton` in `env`
 
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
