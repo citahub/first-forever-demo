@@ -32,6 +32,7 @@ class Add extends React.Component {
       .then(current => {
         const tx = {
           ...transaction,
+          from: appchain.base.defaultAccount,
           validUntilBlock: +current + 88,
         }
         this.setState({
@@ -43,7 +44,7 @@ class Add extends React.Component {
         if (res.hash) {
           return cita.listeners.listenToTransactionReceipt(res.hash)
         } else {
-          throw new Error('No Transaction Hash Received')
+          throw new Error('Rejected or No Transaction Hash Received')
         }
       })
       .then(receipt => {

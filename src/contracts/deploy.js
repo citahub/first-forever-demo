@@ -4,7 +4,14 @@ const {
   bytecode
 } = require('./compiled.js')
 
-const transaction = require('./transaction')
+let transaction = require('./transaction')
+
+// add transaction sender address
+transaction = {
+  ...transaction,
+  from: nervos.appchain.accounts.wallet[0].address,
+}
+
 let _contractAddress = ''
 // contract contract instance
 const myContract = new cita.base.Contract(abi)
