@@ -40,7 +40,8 @@ class Add extends React.Component {
             ? cita.base.accounts.wallet[0].address
             : REACT_APP_RUNTIME === 'cita-web-debugger'
             ? cita.base.defaultAccount
-            : window.cython.getAccount() || ''
+            : REACT_APP_RUNTIME === 'cyton'
+              ? window.cyton.getAccount() : ''
         this.setState({
           submitText: submitTexts.submitting,
         })
