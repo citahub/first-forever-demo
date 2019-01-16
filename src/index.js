@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker'
 import * as cita from './cita'
 const { REACT_APP_RUNTIME } = process.env
 
-if (REACT_APP_RUNTIME === 'web') {
+if (REACT_APP_RUNTIME === 'web' || REACT_APP_RUNTIME === 'cyton') {
   ReactDOM.render(<App />, document.getElementById('root'))
 } else if (REACT_APP_RUNTIME === 'cita-web-debugger') {
   window.addEventListener('citaWebDebuggerReady', () => {
