@@ -1,9 +1,10 @@
 import React from 'react'
-import appchain from '../../appchain'
+import cita from '../../cita'
 import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
 require('./show.css')
 
+const { REACT_APP_RUNTIME } = process.env
 class Show extends React.Component {
   state = {
     time: 0,
@@ -13,12 +14,18 @@ class Show extends React.Component {
 
   componentDidMount() {
     const { time } = this.props.match.params
+    const from =
+      REACT_APP_RUNTIME === 'web'
+        ? cita.base.accounts.wallet[0].address
+        : REACT_APP_RUNTIME === 'cita-web-debugger'
+          ? cita.base.defaultAccount
+          : REACT_APP_RUNTIME === 'cyton'
+            ? window.cyton.getAccount() : ''
     if (time) {
       simpleStoreContract.methods
         .get(time)
         .call({
-          // from: appchain.base.accounts.wallet[0].address,
-          from: appchain.base.defaultAccount,
+          from,
         })
         .then(text => {
           this.setState({ time, text })
