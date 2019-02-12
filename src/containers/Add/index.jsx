@@ -45,11 +45,11 @@ class Add extends React.Component {
         }
         tx.from =
           REACT_APP_RUNTIME === 'web' ?
-          cita.base.accounts.wallet[0].address :
-          REACT_APP_RUNTIME === 'cita-web-debugger' ?
-          cita.base.defaultAccount :
-          REACT_APP_RUNTIME === 'cyton' ?
-          window.cyton.getAccount() : ''
+            cita.base.accounts.wallet[0].address :
+            REACT_APP_RUNTIME === 'cita-web-debugger' ?
+              cita.base.defaultAccount :
+              REACT_APP_RUNTIME === 'cyton' ?
+                window.cyton.getAccount() : ''
         this.setState({
           submitText: submitTexts.submitting,
         })
@@ -61,89 +61,51 @@ class Add extends React.Component {
         } else {
           throw new Error('Rejected or No Transaction Hash Received')
         }
-        if (res.hash) {
-          appchain.listeners.listenToTransactionReceipt(res.hash).then(receipt => {
-            if (!receipt.errorMessage) {
-              that.setState({
-                submitText: submitTexts.submitted
-              })
-            } else {
-              throw new Error(receipt.errorMessage)
-            }
-          })
-        } else {
-          that.setState({
-            submitText: submitTexts.normal
-          })
-        }
+        // if (res.hash) {
+        //   appchain.listeners.listenToTransactionReceipt(res.hash).then(receipt => {
+        //     if (!receipt.errorMessage) {
+        //       that.setState({
+        //         submitText: submitTexts.submitted
+        //       })
+        //     } else {
+        //       throw new Error(receipt.errorMessage)
+        //     }
+        //   })
+        // } else {
+        //   that.setState({
+        //     submitText: submitTexts.normal
+        //   })
+        // }
       })
-  })
-}
-render() {
-  const {
-    time,
-    text,
-    submitText,
-    errorText
-  } = this.state
-  return ( <
-    div className = "add__content--container" >
-    <
-    div className = "add__time--container" >
-    <
-    span className = "add__time--year" > {
-      time.getFullYear()
-    } < /span>:{' '} <
-    span className = "add__time--month" > {
-      timeFormatter((time.getMonth() + 1) % 12)
-    } < /span>:{' '} <
-    span className = "add__time--day" > {
-      timeFormatter(time.getDate())
-    } < /span>:{' '} <
-    span className = "add__time--hour" > {
-      timeFormatter(time.getHours())
-    } < /span>:{' '} <
-    span className = "add__time--min" > {
-      timeFormatter(time.getMinutes())
-    } < /span>{' '} <
-    /div> <
-    div className = "add__content--prompt" >
-    <
-    svg className = "icon"
-    aria - hidden = "true" >
-    <
-    use xlinkHref = "#icon-icon-time" / >
-    <
-    /svg>{' '} <
-    span > 把你觉得重要的一刻， 存放在链上， 永远保存， 随时查看 < /span>{' '} <
-    /div>{' '} <
-    textarea cols = "32"
-    rows = "10"
-    className = "add__content--textarea"
-    placeholder = "留下你的时光吧..."
-    onChange = {
-      this.handleInput
-    }
-    value = {
-      text
-    }
-    />{' '} <
-    Submit text = {
-      submitText
-    }
-    onClick = {
-      this.handleSubmit
-    }
-    disabled = {
-      submitText !== submitTexts.normal
-    }
-    />{' '} {
-      errorText && < span className = "warning" > {
-          errorText
-        } < /span>} <BottomNav showAdd={false} / > {
-          ' '
-        } <
-        /div>
+  }
+  render() {
+    const { time, text, submitText, errorText } = this.state
+    return (
+      <div className="add__content--container">
+        <div className="add__time--container">
+          <span className="add__time--year"> {time.getFullYear()} </span>:{' '}
+          <span className="add__time--month"> {timeFormatter((time.getMonth() + 1) % 12)} </span>:{' '}
+          <span className="add__time--day"> {timeFormatter(time.getDate())} </span>:{' '}
+          <span className="add__time--hour"> {timeFormatter(time.getHours())} </span>:{' '}
+          <span className="add__time--min"> {timeFormatter(time.getMinutes())} </span>{' '}
+        </div>
+        <div className="add__content--prompt">
+          <svg className="icon" aria-hidden="true">
+            <use xlinkHref="#icon-icon-time" />
+          </svg>{' '}
+          <span> 把你觉得重要的一刻， 存放在链上， 永远保存， 随时查看 </span>{' '}
+        </div>{' '}
+        <textarea
+          cols="32"
+          rows="10"
+          className="add__content--textarea"
+          placeholder="留下你的时光吧..."
+          onChange={this.handleInput}
+          value={text}
+        />{' '}
+        <Submit text={submitText} onClick={this.handleSubmit} disabled={submitText !== submitTexts.normal} />{' '}
+        {errorText && <span className="warning"> {errorText} </span>} <BottomNav showAdd={false} />{' '}
+      </div>
     )
   }
 }
