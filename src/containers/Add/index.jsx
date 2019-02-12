@@ -57,25 +57,20 @@ class Add extends React.Component {
       })
       .then(res => {
         if (res.hash) {
-          return cita.listeners.listenToTransactionReceipt(res.hash)
+          return cita.listeners.listenToTransactionReceipt(res.hash).then(receipt => {
+            if (!receipt.errorMessage) {
+              this.setState({
+                submitText: submitTexts.submitted
+              })
+            } else {
+              throw new Error(receipt.errorMessage)
+            }
+          })
         } else {
-          throw new Error('Rejected or No Transaction Hash Received')
+          this.setState({
+            submitText: submitTexts.normal
+          })
         }
-        // if (res.hash) {
-        //   appchain.listeners.listenToTransactionReceipt(res.hash).then(receipt => {
-        //     if (!receipt.errorMessage) {
-        //       that.setState({
-        //         submitText: submitTexts.submitted
-        //       })
-        //     } else {
-        //       throw new Error(receipt.errorMessage)
-        //     }
-        //   })
-        // } else {
-        //   that.setState({
-        //     submitText: submitTexts.normal
-        //   })
-        // }
       })
   }
   render() {
