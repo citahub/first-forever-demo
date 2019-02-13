@@ -4,11 +4,12 @@
   "private": true,
   "homepage": "",
   "dependencies": {
-    "@cryptape/cita-sdk": "^0.21.0-alpha.1",
+    "@cryptape/cita-sdk": "^0.20.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "web3": "1.0.0-beta.36"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,3 +1,5 @@
+const Web3 = require('web3');
+
 const {
   default: CITASDK
 } = require('@cryptape/cita-sdk')
@@ -12,7 +14,7 @@ if (process.env.REACT_APP_RUNTIME === 'web') {
   const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
   cita.base.accounts.wallet.add(account) // add account to cita
 } else if (process.env.REACT_APP_RUNTIME === 'cyton') {
-  cita = CITASDK(window.cita.currentProvider);
+  cita = CITASDK(window.cita.currentProvider, Web3);
   cita.currentProvider.setHost(config.chain);
 }
 

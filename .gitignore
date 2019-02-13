@@ -10,3 +10,4 @@ node_modules
 
 # editor
 .vscode
+package-lock.json
