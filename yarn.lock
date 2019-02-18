@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@cryptape/cita-sdk@^0.22.0-alpha.0":
-  version "0.22.0-alpha.0"
-  resolved "https://registry.npmjs.org/@cryptape/cita-sdk/-/cita-sdk-0.22.0-alpha.0.tgz#f0e358428f0037d547c029962ec6cfd9a6ed02c6"
-  integrity sha512-+D57bKogs8RimfEeBX5snzOvaVoM5B9S+x1zWHdNImJlwGc5V+zotJsI+d3eqvpYaxwj6IxBk00ubqiWXmDcfA==
+"@cryptape/cita-sdk@^0.21.0-0.21.0-alpha.3.0":
+  version "0.21.0-0.21.0-alpha.3.0"
+  resolved "http://registry.npm.taobao.org/@cryptape/cita-sdk/download/@cryptape/cita-sdk-0.21.0-0.21.0-alpha.3.0.tgz#79bfb5987b9203784e730f0cfa8b71ab69ca13d0"
+  integrity sha1-eb+1mHuSA3hOcw8M+otxq2nKE9A=
   dependencies:
-    "@cryptape/cita-signer" "^2.2.0-alpha.0"
-    web3 "^1.0.0-beta.37"
+    "@cryptape/cita-signer" "^2.2.1-alpha.3"
+    web3 "1.0.0-beta.37"
 
-"@cryptape/cita-signer@^2.2.0-alpha.0":
-  version "2.2.0-alpha.0"
-  resolved "https://registry.npmjs.org/@cryptape/cita-signer/-/cita-signer-2.2.0-alpha.0.tgz#1e2ea9fcf471544a074ffeb51ebe0948cd067c4c"
-  integrity sha512-9+OtJ8EcefXVBEEmGLebt1MMlC6Z6g51bOlZzXfZeMNjNXtRpnPGD2+3s5uWq0T4eZQrknD4VHYrMh62A8dnnA==
+"@cryptape/cita-signer@^2.2.1-alpha.3":
+  version "2.2.1-alpha.3"
+  resolved "http://registry.npm.taobao.org/@cryptape/cita-signer/download/@cryptape/cita-signer-2.2.1-alpha.3.tgz#59c246c4f46ba34a7f2c828d0c5bcf8d5cf7c0f4"
+  integrity sha1-WcJGxPRro0p/LIKNDFvPjVz3wPQ=
   dependencies:
     ec "^0.0.1"
     elliptic "^6.4.0"
@@ -9095,7 +9095,7 @@ web3-utils@1.0.0-beta.37:
     underscore "1.8.3"
     utf8 "2.1.1"
 
-web3@^1.0.0-beta.34, web3@^1.0.0-beta.37:
+web3@1.0.0-beta.37, web3@^1.0.0-beta.34:
   version "1.0.0-beta.37"
   resolved "https://registry.npmjs.org/web3/-/web3-1.0.0-beta.37.tgz#b42c30e67195f816cd19d048fda872f70eca7083"
   integrity sha512-8XLgUspdzicC/xHG82TLrcF/Fxzj2XYNJ1KTYnepOI77bj5rvpsxxwHYBWQ6/JOjk0HkZqoBfnXWgcIHCDhZhQ==

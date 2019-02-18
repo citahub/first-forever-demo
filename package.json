@@ -2,9 +2,9 @@
   "name": "first_forever",
   "version": "0.1.0",
   "private": true,
-  "homepage": "first-forever",
+  "homepage": "",
   "dependencies": {
-    "@cryptape/cita-sdk": "^0.21.0-alpha.1",
+    "@cryptape/cita-sdk": "^0.21.0-0.21.0-alpha.3.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",

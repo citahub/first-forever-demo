@@ -2,11 +2,16 @@ import React from 'react'
 import Submit from '../../components/Submit'
 import BottomNav from '../../components/BottomNav'
 import './add.css'
-import { transaction, simpleStoreContract } from '../../simpleStore'
+import {
+  transaction,
+  simpleStoreContract
+} from '../../simpleStore'
 import cita from '../../cita'
 
 const timeFormatter = time => ('' + time).padStart(2, '0')
-const { REACT_APP_RUNTIME } = process.env
+const {
+  REACT_APP_RUNTIME
+} = process.env
 
 const submitTexts = {
   normal: '愿此刻永恒',
@@ -27,7 +32,10 @@ class Add extends React.Component {
     })
   }
   handleSubmit = e => {
-    const { time, text } = this.state
+    const {
+      time,
+      text
+    } = this.state
     cita.base
       .getBlockNumber()
       .then(current => {
@@ -36,12 +44,12 @@ class Add extends React.Component {
           validUntilBlock: +current + 88,
         }
         tx.from =
-          REACT_APP_RUNTIME === 'web'
-            ? cita.base.accounts.wallet[0].address
-            : REACT_APP_RUNTIME === 'cita-web-debugger'
-            ? cita.base.defaultAccount
-            : REACT_APP_RUNTIME === 'cyton'
-              ? window.cyton.getAccount() : ''
+          REACT_APP_RUNTIME === 'web' ?
+            cita.base.accounts.wallet[0].address :
+            REACT_APP_RUNTIME === 'cita-web-debugger' ?
+              cita.base.defaultAccount :
+              REACT_APP_RUNTIME === 'cyton' ?
+                window.cyton.getAccount() : ''
         this.setState({
           submitText: submitTexts.submitting,
         })
@@ -49,24 +57,20 @@ class Add extends React.Component {
       })
       .then(res => {
         if (res.hash) {
-          return cita.listeners.listenToTransactionReceipt(res.hash)
-        } else {
-          throw new Error('Rejected or No Transaction Hash Received')
-        }
-      })
-      .then(receipt => {
-        if (!receipt.errorMessage) {
-          this.setState({
-            submitText: submitTexts.submitted,
+          return cita.listeners.listenToTransactionReceipt(res.hash).then(receipt => {
+            if (!receipt.errorMessage) {
+              this.setState({
+                submitText: submitTexts.submitted
+              })
+            } else {
+              throw new Error(receipt.errorMessage)
+            }
           })
         } else {
-          throw new Error(receipt.errorMessage)
+          this.setState({
+            submitText: submitTexts.normal
+          })
         }
-      })
-      .catch(err => {
-        this.setState({
-          errorText: JSON.stringify(err.toString()),
-        })
       })
   }
   render() {
