@@ -5,8 +5,8 @@ This demo shows the entire process of building a MVP Dapp on cita.
 We provider three situations：
 
 - [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser): set `REACT_APP_RUNTIME=web` in `.env`
-- [run in neuronWeb](#run-in-neuronweb): set `REACT_APP_RUNTIME=cita-web-debugger` in `.env`
-- [run in neuron wallet App](#run-in-neuron-wallet-app): set `REACT_APP_RUNTIME=cyton` in `env`
+- [run in cita-web-debugger](#run-in-cita-web-debugger): set `REACT_APP_RUNTIME=cita-web-debugger` in `.env`
+- [run in cyton wallet App](#run-in-cyton-wallet-app): set `REACT_APP_RUNTIME=cyton` in `env`
 
 > Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
 
@@ -435,11 +435,11 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 ![first forever](https://cdn.cryptape.com/docs/images/ff_3.png)
 ![first forever](https://cdn.cryptape.com/docs/images/ff_4.png)
 
-# Run in neuronWeb
+# Run in cita-web-debugger
 
 [cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) is an CITA Web Debugger on Chrome, acts as an CITA Wallet to sign transactions from DApp.
 
-## Integrate NeuronWeb and Remove Account From CITA SDK
+## Integrate cita-web-debugger and Remove Account From CITA SDK
 
 ```javascript
 // src/cita.js
@@ -461,7 +461,7 @@ window.addEventListener('citaWebDebuggerReader', () => {
 module.exports = cita
 ```
 
-## Render App After NeuronWeb Integration
+## Render App After cita-web-debugger Integration
 
 ```javascript
 // src/index.js
@@ -493,7 +493,7 @@ const transaction = {
 module.exports = transaction
 ```
 
-## Get Default Account From NeuronWeb
+## Get Default Account From cita-web-debugger
 
 ```javascript
 // src/containers/add/index.jsx
@@ -519,17 +519,17 @@ const from = cita.base.defaultAccount
 from: cita.base.defaultAccount,
 ```
 
-After these modification, first-forever will work with neuronWeb perfectly.
+After these modification, first-forever will work with cita-web-debugger perfectly.
 
-# Run in neuron wallet App
+# Run in cyton wallet App
 
-Neuron is a blockchain wallet APP which supports CITA and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/neuron-android) and [iOS](https://github.com/cryptape/neuron-ios).
+Cyton is a blockchain wallet APP which supports CITA and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/cyton-android) and [iOS](https://github.com/cryptape/cyton-ios).
 
-You just update little code to adapter Neuron (Android and iOS).
+You just update little code to adapter Cyton (Android and iOS).
 
 ## Add manifest.json and set manifest path in html link tag
 
-An CITA DApp needs to tell Neuron wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+An CITA DApp needs to tell Cyton wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
 
 As follows, we provide an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
 If you have more than one chain, you should set more pairs of chain id and node httpprovider in chain set.
@@ -555,19 +555,19 @@ You should also set path of manifest.json in html file using link tag.
 <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 ```
 
-## Integrate Neuron and Remove Account From CITA SDK
+## Integrate Cyton and Remove Account From CITA SDK
 
 Then you also should update `cita.js`.
 
 ```javascript
 const { default: CITASDK } = require('@cryptape/cita-sdk')
 
-// Neuron will provider cita object to dapp browser and dapp just update currentProivder and host
+// Cyton will provider cita object to dapp browser and dapp just update currentProivder and host
 if (typeof window.cita !== 'undefined') {
   window.cita = CITASDK(window.cita.currentProvider)
   window.cita.currentProvider.setHost(config.chain)
 } else {
-  console.log('No cita? You should consider trying Neuron!')
+  console.log('No cita? You should consider trying Cyton!')
   window.cita = CITASDK(config.chain)
 }
 var cita = window.cita
@@ -593,14 +593,14 @@ const transaction = {
 module.exports = transaction
 ```
 
-## Get Default Account From Neuron App
+## Get Default Account From Cyton App
 
 ```javascript
 // src/containers/add/index.jsx
 
 const tx = {
   ...transaction,
-  from: window.neuron.getAccout(),
+  from: window.cyton.getAccout(),
   validUntilBlock: +current + 88,
 }
 ```
@@ -609,20 +609,20 @@ const tx = {
 // src/containers/List/index.jsx
 
 // const from = cita.base.accounts.wallet[0] ? cita.base.accounts.wallet[0].address : ''
-const from = window.neuron.getAccout()
+const from = window.cyton.getAccout()
 ```
 
 ```javascript
 // src/containers/Show/index.jsx
 
 // from: cita.base.accounts.wallet[0].address,
-from: window.neuron.getAccout(),
+from: window.cyton.getAccout(),
 ```
 
-After these modification, first-forever will work with neuron App perfectly.
+After these modification, first-forever will work with cyton App perfectly.
 
 If you have any mistakes in Android, you can debug in Chrome browser and input `chrome://inspect`.
 
 If you want to debug in iOS , you can debug in Safari browser.
 
-> Note: If you want to debug, you should download Android or iOS neuron project and build , install.
+> Note: If you want to debug, you should download Android or iOS cyton project and build , install.
