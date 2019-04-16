@@ -2,7 +2,7 @@
 
 English | [简体中文](./README-CN.md)
 
-This demo shows the entire process of building a MVP Dapp on CITA.
+This demo shows the entire process of building a MVP DApp on CITA.
 
 We provider three situations：
 
@@ -92,7 +92,7 @@ Now the project looks like
 
 ## 2. Add Components of the Dapp
 
-This step is very familiar to webapp developers, [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) will be added to the Dapp
+This step is very familiar to webapp developers, [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) will be added to the DApp
 
 ```shell
 └── src
@@ -108,13 +108,13 @@ The Route indicates that the demo has 4 pages:
 - [MemoList](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/List/index.jsx)
 - [Memo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
 
-All above are just traditional webapp development, and next we are going to dapp development.
+All above are just traditional webapp development, and next we are going to DApp development.
 
 ## 3. cita-sdk.js
 
-This step instructs how to have a Dapp running on CITA.
+This step instructs how to have a DApp running on CITA.
 
-The Dapp interacts with CITA by the `cita-sdk.js` and details of `cita` can be accessed at [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
+The DApp interacts with CITA by the `cita-sdk.js` and details of `cita` can be accessed at [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
 
 In order to use cita-sdk.js, add cita-sdk as other packages by yarn `yarn add @cryptape/cita-sdk`, and then instantiate `cita` in `src/cita-sdk.js`.
 
@@ -133,7 +133,7 @@ module.exports = cita
 
 ## 4. Smart Contract
 
-This Dapp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
+This DApp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
 
 ```solidity
 pragma solidity 0.4.24;
@@ -430,7 +430,7 @@ componentDidMount() {
 }
 ```
 
-As all of these done, start the local server by `npm start` to launch the dapp.
+As all of these done, start the local server by `npm start` to launch the DApp.
 
 ![first forever](https://cdn.cryptape.com/docs/images/ff_1.png)
 ![first forever](https://cdn.cryptape.com/docs/images/ff_2.png)
@@ -439,7 +439,7 @@ As all of these done, start the local server by `npm start` to launch the dapp.
 
 # Run in cita-web-debugger
 
-[cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) is is an extension of chrome and a debugger tool for CITA.
+[cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) is an extension of chrome and debugger tool for CITA.
 
 ## Integrate cita-web-debugger and Remove Account From CITA SDK
 
@@ -531,7 +531,7 @@ You just update little code to adapter Cyton (Android and iOS).
 
 ## Add manifest.json and set manifest path in html link tag
 
-An CITA DApp needs to tell Cyton wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+An CITA DApp needs to tell cyton wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
 
 As follows, we provide an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
 If you have more than one chain, you should set more pairs of chain id and node httpprovider in chain set.
@@ -621,7 +621,7 @@ const from = window.cyton.getAccout()
 from: window.cyton.getAccout(),
 ```
 
-After these modification, first-forever-demo will work with cyton App perfectly.
+After these modification, first-forever-demo will work with cyton wallet perfectly.
 
 If you have any mistakes in Android, you can debug in Chrome browser and input `chrome://inspect`.
 
