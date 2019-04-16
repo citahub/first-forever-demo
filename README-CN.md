@@ -2,7 +2,7 @@
 
 [English](./README.md) | 简体中文
 
-本 demo 展示在 CITA 上开发一个 MVP Dapp 的完整流程。
+本 demo 展示在 CITA 上开发一个 MVP DApp 的完整流程。
 
 我们提供三种方式：
 
@@ -13,6 +13,8 @@
 > 注意: 开发者应具备编译开发 webapp 的能力，并了解区块链和智能合约的基础知识。
 
 操作步骤示意图：
+
+<img src="https://raw.githubusercontent.com/cryptape/first-forever-demo/develop/doc/steps.png">
 
 开始前需安装 [node.js](https://nodejs.org)。
 
@@ -92,7 +94,7 @@ $ create-react-app first-forever && cd first-forever
     └── registerServiceWorker.js
 ```
 
-## 2. 添加 Dapp 组件
+## 2. 添加 DApp 组件
 
 此部分即 webapp 开发，开发完成后会添加 [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) 
 
@@ -110,11 +112,11 @@ $ create-react-app first-forever && cd first-forever
 - [MemoList](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/List/index.jsx)
 - [Memo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
 
-以上即为普通 webapp 开发，接下里进入 Dapp 开发。
+以上即为普通 webapp 开发，接下里进入 DApp 开发。
 
 ## 3. 引入 cita-sdk-js
 
-This step instructs how to have a Dapp running on Nervos cita.  Dapp 通过 cita-sdk-js 与 CITA 进行交互，部署 Dapp，细节可访问 [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
+DApp 通过 cita-sdk-js 与 CITA 进行交互，部署 DApp，细节可访问 [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
 
  `yarn add @cryptape/cita-sdk` 之后初始化 `src/cita-sdk.js` 中的 `cita`
 
@@ -133,7 +135,7 @@ module.exports = cita
 
 ## 4. 编写并调试智能合约
 
-本 Dapp 使用了非常简单的智能合约 -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
+本 DApp 使用了非常简单的智能合约 -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
 
 ```solidity
 pragma solidity 0.4.24;
@@ -327,7 +329,7 @@ contract SimpleStore {
   module.exports = config
   ```
 
-## 将智能合约集成进 Dapp
+## 将智能合约集成进 DApp
 
 ### 初始化智能合约
 
@@ -427,7 +429,7 @@ componentDidMount() {
 }
 ```
 
-开启本地服务器，启动 Dapp `npm start` 。
+开启本地服务器，启动 DApp `npm start` 。
 
 ![first forever](https://cdn.cryptape.com/docs/images/ff_1.png)
 ![first forever](https://cdn.cryptape.com/docs/images/ff_2.png)
@@ -438,7 +440,7 @@ componentDidMount() {
 
 [cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) 是一个浏览器插件，用于在浏览器上做交易调试。
 
-## 集成 cita-web-debugger ，从 CITA SDK 移除Account
+## 集成 cita-web-debugger ，从 CITA SDK 移除 Account
 
 ```javascript
 // src/cita.js
@@ -528,7 +530,7 @@ Cyton 是开源的区块链钱包，支持 CITA 和 Ethereum，包括 Android �
 
 ## 添加 manifest.json 并在 html link tag 中设置 manifest 路径
 
-CITA Dapp 需要通过 manifest.json 文件传给 Cyton wallet 一些区块链信息，包括 chain name、chain id、node httpprovider 等。
+CITA DApp 需要通过 manifest.json 文件传给 Cyton Wallet 一些区块链信息，包括 chain name、chain id、node httpprovider 等。
 
 我们提供了 manifest.json 的示例，建议放在项目根目录中。
 如果有链，应在 chain set 中设置多对 chain id 和 node httpprovider。
