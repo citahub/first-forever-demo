@@ -14,7 +14,7 @@
 
 操作步骤示意图：
 
-<img src="https://raw.githubusercontent.com/cryptape/first-forever-demo/develop/doc/steps.png">
+![](https://raw.githubusercontent.com/cryptape/first-forever-demo/develop/doc/steps.png)
 
 开始前需安装 [node.js](https://nodejs.org)。
 
