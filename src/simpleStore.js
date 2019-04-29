@@ -1,4 +1,4 @@
-const cita = require('./cita')
+const cita = require('./cita-sdk')
 const {
   abi
 } = require('./contracts/compiled.js')
