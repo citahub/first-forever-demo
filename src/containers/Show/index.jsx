@@ -1,5 +1,5 @@
 import React from 'react'
-import cita from '../../cita'
+import cita from '../../cita-sdk'
 import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
 require('./show.css')

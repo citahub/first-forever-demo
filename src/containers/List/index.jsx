@@ -6,7 +6,7 @@ import BottomNav from '../../components/BottomNav'
 import {
   simpleStoreContract
 } from '../../simpleStore'
-import cita from '../../cita'
+import cita from '../../cita-sdk'
 require('./list.css')
 
 const {
