@@ -454,7 +454,7 @@ const cita = CITASDK(config.chain) // config.chain indicates that the address of
 const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
 // cita.base.accounts.wallet.add(account) // add account to cita
-window.addEventListener('citaWebDebuggerReader', () => {
+window.addEventListener('citaWebDebuggerReady', () => {
   if (window.addMessenger) {
     window.addMessenger(cita)
   }
