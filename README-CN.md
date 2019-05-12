@@ -8,7 +8,7 @@
 
 - [运行在 PC 和移动浏览器](#运行在PC和移动浏览器)：在 `.env` 设置 `REACT_APP_RUNTIME=web`
 - [集成 cita-web-debugger 运行](#集成cita-web-debugger运行)： 在 `.env` 设置`REACT_APP_RUNTIME=cita-web-debugger`
-- [集成 Cyton Wallet App 运行](#集成CytonWalletApp运行)：在 `.env` 设置 `REACT_APP_RUNTIME=cyton` 
+- [集成 Cyton Wallet App 运行](#集成CytonWalletApp运行)：在 `.env` 设置 `REACT_APP_RUNTIME=cyton`
 
 > 注意: 开发者应具备编译开发 webapp 的能力，并了解区块链和智能合约的基础知识。
 
@@ -96,7 +96,7 @@ $ create-react-app first-forever && cd first-forever
 
 ## 2. 添加 DApp 组件
 
-此部分即 webapp 开发，开发完成后会添加 [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) 
+此部分即 webapp 开发，开发完成后会添加 [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components)
 
 ```shell
 └── src
@@ -333,7 +333,7 @@ contract SimpleStore {
 
 ### 初始化智能合约
 
-初始化智能合约 [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js) 
+初始化智能合约 [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js)
 
 ```javascript
 const cita = require('./cita')
@@ -453,7 +453,7 @@ const cita = CITASDK(config.chain) // config.chain indicates that the address of
 const account = cita.base.accounts.privateKeyToAccount(config.privateKey) // create account by private key from config
 
 // cita.base.accounts.wallet.add(account) // add account to cita
-window.addEventListener('citaWebDebuggerReader', () => {
+window.addEventListener('citaWebDebuggerReady', () => {
   if (window.addMessenger) {
     window.addMessenger(cita)
   }

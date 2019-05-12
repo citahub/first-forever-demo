@@ -468,7 +468,7 @@ module.exports = cita
 ```javascript
 // src/index.js
 
-window.addEventListener('citaWebDebuggerReader', () => {
+window.addEventListener('citaWebDebuggerReady', () => {
   setTimeout(() => {
     ReactDOM.render(<App />, document.getElementById('root'))
   }, 10)
