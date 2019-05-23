@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@cryptape/cita-sdk@^0.22.2":
-  version "0.22.2"
-  resolved "https://registry.yarnpkg.com/@cryptape/cita-sdk/-/cita-sdk-0.22.2.tgz#8f7f813232ec9cee4b8af2e075518e5a81bbfe7a"
-  integrity sha512-YFNf7NFyIaenNqHFB0njYrK+dij9c5cy1W8ohqc+80j/MD2/PCR1gt7jBqwrSDUxkVxTSvl9Kqjs/Q2CCQb1lQ==
+"@cryptape/cita-sdk@^0.23.0":
+  version "0.23.1"
+  resolved "https://registry.yarnpkg.com/@cryptape/cita-sdk/-/cita-sdk-0.23.1.tgz#9d970cba62358f7a20d2500bd3e529211d1833a3"
+  integrity sha512-S9/WxMdRgCBuESgw9WJumyXZ4XEJFOrER2N0oyu33FlxWfmyN5h0R8jLSfJW17dPiAJxjIzxRypkiy+AK/S41g==
   dependencies:
-    "@cryptape/cita-signer" "^2.2.3"
+    "@cryptape/cita-signer" "^2.3.0"
     web3 "1.0.0-beta.37"
 
-"@cryptape/cita-signer@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@cryptape/cita-signer/-/cita-signer-2.2.3.tgz#2000f8a19b8bb9f45b5a0e42b2c7cc034e7b8b82"
-  integrity sha512-KA06lG33uCj10/AcIOWbl/qnXf0qh4QIdHtiIMJMdLLUQcA7E06HTF+1acbeFHMDT5Q6O8SOFesskp0Ze8ReoA==
+"@cryptape/cita-signer@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@cryptape/cita-signer/-/cita-signer-2.3.0.tgz#bb84405b06cf0a6b2dc253375fe23010416ed58f"
+  integrity sha512-J88vs3+U0XSvcj+nE/zSa/TmLSzRTX/sJYQXSyb/RBTdMcloYpkP5SEYK/kNCVbXYFv7NiXoGpzPP9q6PTWwhQ==
   dependencies:
     ec "^0.0.1"
     elliptic "^6.4.0"
