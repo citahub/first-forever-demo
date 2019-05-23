@@ -1,4 +1,4 @@
-const cita = require("../cita");
+const cita = require("../cita-sdk");
 const transaction = {
   nonce: 999999,
   quota: 1000000,

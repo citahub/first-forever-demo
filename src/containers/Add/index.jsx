@@ -6,7 +6,7 @@ import {
   transaction,
   simpleStoreContract
 } from '../../simpleStore'
-import cita from '../../cita'
+import cita from '../../cita-sdk'
 
 const timeFormatter = time => ('' + time).padStart(2, '0')
 const {
