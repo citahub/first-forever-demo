@@ -63,13 +63,13 @@ class Add extends React.Component {
                 submitText: submitTexts.submitted
               })
             } else {
-              throw new Error(receipt.errorMessage)
+                alert(receipt.errorMessage)
+                this.props.history.push('/');
             }
           })
         } else {
-          this.setState({
-            submitText: submitTexts.normal
-          })
+            alert("Transaction send failed")
+            this.props.history.push('/');
         }
       })
   }
