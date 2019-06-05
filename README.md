@@ -205,7 +205,7 @@ Create directory in `src`
     nonce: '123abcXYZ',
     quota: 1000000,
     chainId: 1,
-    version: 1,
+    version: 2,
     validUntilBlock: 999999,
     value: '0x0',
   }
@@ -485,7 +485,7 @@ const transaction = {
   nonce: '123abcXYZ',
   quota: 1000000,
   chainId: 1,
-  version: 1,
+  version: 2,
   validUntilBlock: 999999,
   value: '0x0',
 }
@@ -585,7 +585,7 @@ const transaction = {
   nonce: '123abcXYZ',
   quota: 1000000, // 10000 or 0xffff
   chainId: 1,
-  version: 1,
+  version: 2,
   validUntilBlock: 999999,
   value: '0x0',
 }
