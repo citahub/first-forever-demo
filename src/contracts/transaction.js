@@ -1,15 +1,15 @@
-const cita = require('../cita')
+const cita = require("../cita-sdk");
 const transaction = {
   nonce: 999999,
   quota: 1000000,
-  chainId: 1,
+  chainId: "0x1",
   version: 2,
   validUntilBlock: 999999,
-  value: '0x0',
-}
-if (process.env.REACT_APP_RUNTIME === 'web') {
-  transaction.from = cita.base.accounts.wallet[0].address
-  transaction.privateKey = cita.base.accounts.wallet[0].privateKey
+  value: "0x0"
+};
+if (process.env.REACT_APP_RUNTIME === "web") {
+  transaction.from = cita.base.accounts.wallet[0].address;
+  transaction.privateKey = cita.base.accounts.wallet[0].privateKey;
 }
 
-module.exports = transaction
+module.exports = transaction;

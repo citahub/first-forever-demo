@@ -1,30 +1,34 @@
 # First Forever
 
-English | [简体中文](./README-CN.md)
+[English](./README.md) | 简体中文
 
-This demo shows the entire process of building a MVP DApp on CITA.
+本 demo 展示在 CITA 上开发一个 MVP DApp 的完整流程。
 
-We provider three situations：
+我们提供三种方式：
 
-- [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser): set `REACT_APP_RUNTIME=web` in `.env`
-- [run in cita-web-debugger](#run-in-cita-web-debugger): set `REACT_APP_RUNTIME=cita-web-debugger` in `.env`
-- [run in cyton wallet App](#run-in-cyton-wallet-app): set `REACT_APP_RUNTIME=cyton` in `env`
+- [运行在 PC 和移动浏览器](#运行在PC和移动浏览器)：在 `.env` 设置 `REACT_APP_RUNTIME=web`
+- [集成 cita-web-debugger 运行](#集成cita-web-debugger运行)： 在 `.env` 设置`REACT_APP_RUNTIME=cita-web-debugger`
+- [集成 Cyton Wallet App 运行](#集成CytonWalletApp运行)：在 `.env` 设置 `REACT_APP_RUNTIME=cyton`
 
-> Notice: This tutorial is for the developers who is able to build webapps and has basic knowledge of Blockchain and Smart Contract.
+> 注意: 开发者应具备编译开发 webapp 的能力，并了解区块链和智能合约的基础知识。
 
-Before you start a tour, you may need to install [node.js](https://nodejs.org) firstly.
+操作步骤示意图：
 
-# Run in PC and mobile browser
+![](https://raw.githubusercontent.com/cryptape/first-forever-demo/develop/doc/steps.png)
 
-All interactions with Smart Contract are:
+开始前需安装 [node.js](https://nodejs.org)。
 
-- Store Text in Smart Contract: a `sendTransaction` action;
+# 运行在 PC 和移动浏览器
 
-- Get TextList from Smart Contract: a `call` action;
+与智能合约的交互有：
 
-- Get Text from Smart Contract: a `call` action;
+- 在智能合约中存储 Text：`sendTransaction`；
 
-The final project looks like
+- 从智能合约获取 TextList：`call`
+
+- 从智能合约获取 Text：`call`
+
+最终项目目录如下所示：
 
 ```shell
 ├── README.md
@@ -52,25 +56,25 @@ The final project looks like
 └── yarn.lock
 ```
 
-# Getting Started
+# 开始
 
-## 1. Use Scaffold for Project
+## 1. 使用 Scaffold
 
-This Demo use `create-react-app` to start the project, so you need the `create-react-app` scaffold firstly
+本 Demo 需使用 `create-react-app` 构建，所以需安装 `create-react-app` scffold
 
-> Notice: This demo is created by create-react-app and supported by modern browser. If es5 version needed, just eject the scaffold and add `@babel/preset-es2015` in `.babelrc`
+> 注意: 本 demo 用 create-react-app 构建，并支持现有浏览器，如果需要 es5 版本，可弹出 scaffold，在 `.babelrc` 添加 `@babel/preset-es2015`
 
 ```shell
 $ yarn global add create-react-app
 ```
 
-After that the project can be initiated by
+初始化项目
 
 ```shell
 $ create-react-app first-forever && cd first-forever
 ```
 
-Now the project looks like
+项目结构为：
 
 ```shell
 ├── README.md
@@ -90,9 +94,9 @@ Now the project looks like
     └── registerServiceWorker.js
 ```
 
-## 2. Add Components of the Dapp
+## 2. 添加 DApp 组件
 
-This step is very familiar to webapp developers, [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) will be added to the DApp
+此部分即 webapp 开发，开发完成后会添加 [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components)
 
 ```shell
 └── src
@@ -101,22 +105,20 @@ This step is very familiar to webapp developers, [Route](https://github.com/cryp
     └── containers
 ```
 
-The Route indicates that the demo has 4 pages:
+本 demo 包括 4 个页面:
 
 - [Homepage](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Home/index.jsx)
 - [AddMemo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Add/index.jsx)
 - [MemoList](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/List/index.jsx)
 - [Memo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
 
-All above are just traditional webapp development, and next we are going to DApp development.
+以上即为普通 webapp 开发，接下里进入 DApp 开发。
 
-## 3. cita-sdk.js
+## 3. 引入 cita-sdk-js
 
-This step instructs how to have a DApp running on CITA.
+DApp 通过 cita-sdk-js 与 CITA 进行交互，部署 DApp，细节可访问 [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
 
-The DApp interacts with CITA by the `cita-sdk.js` and details of `cita` can be accessed at [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
-
-In order to use cita-sdk.js, add cita-sdk as other packages by yarn `yarn add @cryptape/cita-sdk`, and then instantiate `cita` in `src/cita-sdk.js`.
+ `yarn add @cryptape/cita-sdk` 之后初始化 `src/cita-sdk.js` 中的 `cita`
 
 ```javascript
 const { default: CITASDK } = require('@cryptape/cita-sdk')
@@ -131,9 +133,9 @@ cita.base.accounts.wallet.add(account) // add account to cita
 module.exports = cita
 ```
 
-## 4. Smart Contract
+## 4. 编写并调试智能合约
 
-This DApp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
+本 DApp 使用了非常简单的智能合约 -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
 
 ```solidity
 pragma solidity 0.4.24;
@@ -168,21 +170,21 @@ contract SimpleStore {
 }
 ```
 
-Smart Contract can be debugged on [CITA-IDE](https://appchain-ide.cryptape.com/), an online solidity debugger
+智能合约可通过 [CITA-IDE](https://appchain-ide.cryptape.com/)在线编译并调试
 
 ![remix](https://cdn.cryptape.com/docs/images/remix.png)
 
-By clicking on `Detail` in the right-side panel, compiled details will show as follow
+点击右侧面板 `Detail` ，展示编译详情
 
 ![remix](https://cdn.cryptape.com/docs/images/remix_detail.png)
 
-In details, **bytecode** and **abi** will be used in this demo.
+编译生成的 **bytecode** 和 **abi** 会在 demo 中使用：
 
-**bytecode** is used to deploy the contract, and **abi** is used to instantiate a contract instance for interacting.
+**bytecode** 用于部署 contract ，**abi** 用于初始化交互的合约实例。
 
-### Deploy and Test the Contract
+### 部署和测试智能合约
 
-Create directory in `src`
+在 `src` 下创建目录
 
 ```
 ├── contracts
@@ -193,11 +195,11 @@ Create directory in `src`
 │   └── transaction.js
 ```
 
-- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol)
+- 保存 SimpleStore 代码 [SimpleStore.sol](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol)
 
-- Store **bytecode** and **abi** in [compiled.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/compiled.js)
+- 保存 **bytecode** 和 **abi** [compiled.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/compiled.js)
 
-- Store transaction template in [transaction.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/transaction.js)
+- 保存交易模板 [transaction.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/transaction.js)
 
   ```javascript
   const cita = require('../cita')
@@ -207,7 +209,7 @@ Create directory in `src`
     nonce: '123abcXYZ',
     quota: 1000000,
     chainId: 1,
-    version: 2,
+    version: 1,
     validUntilBlock: 999999,
     value: '0x0',
   }
@@ -215,7 +217,7 @@ Create directory in `src`
   module.exports = transaction
   ```
 
-- Store deploy script in [deploy.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/deploy.js)
+- 保存部署脚本 [deploy.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/deploy.js)
 
   ```javascript
   const cita = require('../cita')
@@ -260,7 +262,7 @@ Create directory in `src`
     .catch(err => console.error(err))
   ```
 
-- Store test script in [contracts.test.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
+- 保存测试脚本 [contracts.test.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
 
   ```javascript
   const cita = require('../cita')
@@ -295,7 +297,7 @@ Create directory in `src`
   }, 3000)
   ```
 
-- Add deploy and test script in [package.json](https://github.com/cryptape/first-forever-demo/tree/develop/package.json)
+- 在 [package.json](https://github.com/cryptape/first-forever-demo/tree/develop/package.json) 中添加部署和测试脚本
 
   ```json
   "scripts": {
@@ -304,21 +306,19 @@ Create directory in `src`
   }
   ```
 
-- Create `src/config.js`, set private key and chain ip in it.
+- 创建 `src/config.js`, 添加私钥和 chain IP。
 
   ```shell
   $ cp src/config.js.example src/config.js
   ```
 
-- Deploy the contract
+- 部署智能合约
 
   ```shell
   $ npm run deploy
   ```
 
-- Add contract address to config.js and test
-
-  For now the `config.js` should be like:
+- 在 config.js 中添加合约地址并测试，最终 config.js 如下所示：
 
   ```javascript
   const config = {
@@ -329,11 +329,11 @@ Create directory in `src`
   module.exports = config
   ```
 
-## Integrate Contract into Dapp
+## 将智能合约集成进 DApp
 
-### Instantiate Contract
+### 初始化智能合约
 
-Instantiate Contract in [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js) under `src`
+初始化智能合约 [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js)
 
 ```javascript
 const cita = require('./cita')
@@ -348,10 +348,9 @@ module.exports = {
 }
 ```
 
-### Add `myContract.add` in AddMemo Page
+### 在 AddMemo 页面，添加 `myContract.add`
 
-In `src/containers/Add/index.jsx`, bind the following method to submit button
-
+在提交按钮上绑定如下方法 `src/containers/Add/index.jsx`
 ```javascript
 handleSubmit = e => {
   const { time, text } = this.state
@@ -387,7 +386,7 @@ handleSubmit = e => {
 }
 ```
 
-In `src/containers/List/index.jsx`, load memos on mount
+在 mount 加载 memos `src/containers/List/index.jsx`
 
 ```javascript
 componentDidMount() {
@@ -409,7 +408,7 @@ componentDidMount() {
 }
 ```
 
-In `src/containers/Show/index.jsx`, load memo on mount
+在 mount 加载 memo `src/containers/Show/index.jsx`
 
 ```javascript
 componentDidMount() {
@@ -430,21 +429,21 @@ componentDidMount() {
 }
 ```
 
-As all of these done, start the local server by `npm start` to launch the DApp.
+开启本地服务器，启动 DApp `npm start` 。
 
 ![first forever](https://cdn.cryptape.com/docs/images/ff_1.png)
 ![first forever](https://cdn.cryptape.com/docs/images/ff_2.png)
 ![first forever](https://cdn.cryptape.com/docs/images/ff_3.png)
 ![first forever](https://cdn.cryptape.com/docs/images/ff_4.png)
 
-# Run in cita-web-debugger
+# 集成 cita-web-debugger 运行
 
-[cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) is an extension of chrome and debugger tool for CITA.
+[cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) 是一个浏览器插件，用于在浏览器上做交易调试。
 
-## Integrate cita-web-debugger and Remove Account From CITA SDK
+## 集成 cita-web-debugger ，从 CITA SDK 移除 Account
 
 ```javascript
-// src/cita-sdk.js
+// src/cita.js
 
 const { default: CITASDK } = require('@cryptape/cita-sdk')
 
@@ -463,7 +462,7 @@ window.addEventListener('citaWebDebuggerReady', () => {
 module.exports = cita
 ```
 
-## Render App After cita-web-debugger Integration
+## 集成 cita-web-debugger 之后，Render App
 
 ```javascript
 // src/index.js
@@ -475,7 +474,7 @@ window.addEventListener('citaWebDebuggerReady', () => {
 })
 ```
 
-## Remove Account-related Fields From Transaction Template
+## 从 Transaction Template 中删除与 Account 相关的字段
 
 ```javascript
 // src/contracts/transaction.js
@@ -487,7 +486,7 @@ const transaction = {
   nonce: '123abcXYZ',
   quota: 1000000,
   chainId: 1,
-  version: 2,
+  version: 1,
   validUntilBlock: 999999,
   value: '0x0',
 }
@@ -495,7 +494,7 @@ const transaction = {
 module.exports = transaction
 ```
 
-## Get Default Account From cita-web-debugger
+## 从 cita-web-debugger 中获取默认 Account
 
 ```javascript
 // src/containers/add/index.jsx
@@ -521,20 +520,20 @@ const from = cita.base.defaultAccount
 from: cita.base.defaultAccount,
 ```
 
-After these modification, first-forever-demo will work with cita-web-debugger perfectly.
+之后 first-forever-demo 可与 cita-web-debugger 集成运行。
 
-# Run in cyton wallet App
+# 集成 Cyton Wallet App 运行
 
-Cyton is a blockchain wallet APP which supports CITA and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/cyton-android) and [iOS](https://github.com/cryptape/cyton-ios).
+Cyton 是开源的区块链钱包，支持 CITA 和 Ethereum，包括 Android 版和 iOS 版: [Android](https://github.com/cryptape/cyton-android) and [iOS](https://github.com/cryptape/cyton-ios)。
 
-You just update little code to adapter Cyton (Android and iOS).
+只需更新少量代码即可适配 Cyton (Android & iOS)。
 
-## Add manifest.json and set manifest path in html link tag
+## 添加 manifest.json 并在 html link tag 中设置 manifest 路径
 
-An CITA DApp needs to tell cyton wallet some information of the blockchain through manifest.json file, which contains chain name, chain id, node httpprovider etc.
+CITA DApp 需要通过 manifest.json 文件传给 Cyton Wallet 一些区块链信息，包括 chain name、chain id、node httpprovider 等。
 
-As follows, we provide an example of manifest.json. In general, we suggest to put manifest.json in root directory of the project.
-If you have more than one chain, you should set more pairs of chain id and node httpprovider in chain set.
+我们提供了 manifest.json 的示例，建议放在项目根目录中。
+如果有链，应在 chain set 中设置多对 chain id 和 node httpprovider。
 
 ```javascript
 // public/manifest.json
@@ -551,15 +550,15 @@ If you have more than one chain, you should set more pairs of chain id and node 
 }
 ```
 
-You should also set path of manifest.json in html file using link tag.
+在 html link tag 中设置 manifest.json 路径
 
 ```html
 <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 ```
 
-## Integrate Cyton and Remove Account From CITA SDK
+## 集成 Cyton 后 从 CITA SDK 中移除 Account
 
-Then you also should update `cita.js`.
+更新 `cita-sdk.js`.
 
 ```javascript
 const { default: CITASDK } = require('@cryptape/cita-sdk')
@@ -577,7 +576,7 @@ var cita = window.cita
 module.exports = cita
 ```
 
-## Remove Account-related Fields From Transaction Template
+## 从 Transaction Template 中移除 Account 相关的字段
 
 ```javascript
 // src/contracts/transaction.js
@@ -587,7 +586,7 @@ const transaction = {
   nonce: '123abcXYZ',
   quota: 1000000, // 10000 or 0xffff
   chainId: 1,
-  version: 2,
+  version: 1,
   validUntilBlock: 999999,
   value: '0x0',
 }
@@ -595,7 +594,7 @@ const transaction = {
 module.exports = transaction
 ```
 
-## Get Default Account From Cyton App
+## 从 Cyton App 中获取默认 Account
 
 ```javascript
 // src/containers/add/index.jsx
@@ -621,10 +620,10 @@ const from = window.cyton.getAccout()
 from: window.cyton.getAccout(),
 ```
 
-After these modification, first-forever-demo will work with cyton wallet perfectly.
+之后 first-forever-demo 可集成 Cyton Wallet App 运行。
 
-If you have any mistakes in Android, you can debug in Chrome browser and input `chrome://inspect`.
+若 Android 版有任何问题，可在 Chrome 浏览器调试，并输入 `chrome://inspect`。
 
-If you want to debug in iOS , you can debug in Safari browser.
+若需调试 iOS 版本，可在 Safari 浏览器中调试。
 
-> Note: If you want to debug, you should download Android or iOS cyton project and build , install.
+> 注意: 调试时需下载 Cyton Wallet Android 或 iOS 的项目并安装，构建。

@@ -2,7 +2,7 @@
   "name": "first_forever",
   "version": "0.1.0",
   "private": true,
-  "homepage": "first-forever",
+  "homepage": "",
   "dependencies": {
     "@cryptape/cita-sdk": "0.24.0",
     "react": "^16.4.1",
