@@ -8,7 +8,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,5 +17,11 @@
     "eject": "react-scripts eject",
     "deploy": "node ./src/contracts/deploy.js",
     "test:contract": "node ./src/contracts/contracts.test.js"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
