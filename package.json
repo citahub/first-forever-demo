@@ -10,6 +10,10 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "3.0.0"
   },
+  "engines": {
+    "node": ">= 10.0.0",
+    "yarn": ">= 1.14"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
