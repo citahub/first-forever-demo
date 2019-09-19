@@ -60,14 +60,10 @@ This Demo use `create-react-app` to start the project, so you need the `create-r
 
 > Notice: This demo is created by create-react-app and supported by modern browser. If es5 version needed, just eject the scaffold and add `@babel/preset-es2015` in `.babelrc`
 
-```shell
-$ yarn global add create-react-app
-```
-
-After that the project can be initiated by
+The project can be initiated by
 
 ```shell
-$ create-react-app first-forever && cd first-forever
+$ yarn create react-app first-forever && cd first-forever
 ```
 
 Now the project looks like
