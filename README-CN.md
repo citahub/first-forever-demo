@@ -64,14 +64,10 @@
 
 > 注意: 本 demo 用 create-react-app 构建，并支持现有浏览器，如果需要 es5 版本，可弹出 scaffold，在 `.babelrc` 添加 `@babel/preset-es2015`
 
-```shell
-$ yarn global add create-react-app
-```
-
 初始化项目
 
 ```shell
-$ create-react-app first-forever && cd first-forever
+$ yarn create react-app first-forever && cd first-forever
 ```
 
 项目结构为：
