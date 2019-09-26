@@ -6,9 +6,9 @@
 
 我们提供三种方式：
 
-- [运行在 PC 和移动浏览器](#运行在PC和移动浏览器)：在 `.env` 设置 `REACT_APP_RUNTIME=web`
-- [集成 cita-web-debugger 运行](#集成cita-web-debugger运行)： 在 `.env` 设置`REACT_APP_RUNTIME=cita-web-debugger`
-- [集成 Cyton Wallet App 运行](#集成CytonWalletApp运行)：在 `.env` 设置 `REACT_APP_RUNTIME=cyton`
+- [运行在 PC 和移动浏览器](#运行在-pc-和移动浏览器)：在 `.env` 设置 `REACT_APP_RUNTIME=web`
+- [集成 cita-web-debugger 运行](#集成-cita-web-debugger-运行)： 在 `.env` 设置`REACT_APP_RUNTIME=cita-web-debugger`
+- [集成 Cyton Wallet App 运行](#集成-cyton-wallet-app-运行)：在 `.env` 设置 `REACT_APP_RUNTIME=cyton`
 
 > 注意: 开发者应具备编译开发 webapp 的能力，并了解区块链和智能合约的基础知识。
 

@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "",
   "dependencies": {
-    "@cryptape/cita-sdk": "0.25.0",
+    "@cryptape/cita-sdk": "0.25.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
