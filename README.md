@@ -16,6 +16,8 @@ Before you start a tour, you may need to install [node.js](https://nodejs.org) f
 
 # Run in PC and mobile browser
 
+*Recommended node environment: `v10.16.3`*
+
 All interactions with Smart Contract are:
 
 - Store Text in Smart Contract: a `sendTransaction` action;
