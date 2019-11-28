@@ -90,7 +90,7 @@ Now the project looks like
 
 ## 2. Add Components of the Dapp
 
-This step is very familiar to webapp developers, [Route](https://github.com/cryptape/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/cryptape/first-forever-demo/tree/develop/src/components) will be added to the DApp
+This step is very familiar to webapp developers, [Route](https://github.com/citahub/first-forever-demo/blob/develop/src/Routes.jsx), [Containers](https://github.com/citahub/first-forever-demo/tree/develop/src/containers) and [Components](https://github.com/citahub/first-forever-demo/tree/develop/src/components) will be added to the DApp
 
 ```shell
 └── src
@@ -101,10 +101,10 @@ This step is very familiar to webapp developers, [Route](https://github.com/cryp
 
 The Route indicates that the demo has 4 pages:
 
-- [Homepage](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Home/index.jsx)
-- [AddMemo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Add/index.jsx)
-- [MemoList](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/List/index.jsx)
-- [Memo](https://github.com/cryptape/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
+- [Homepage](https://github.com/citahub/first-forever-demo/tree/develop/src/containers/Home/index.jsx)
+- [AddMemo](https://github.com/citahub/first-forever-demo/tree/develop/src/containers/Add/index.jsx)
+- [MemoList](https://github.com/citahub/first-forever-demo/tree/develop/src/containers/List/index.jsx)
+- [Memo](https://github.com/citahub/first-forever-demo/tree/develop/src/containers/Show/index.jsx)
 
 All above are just traditional webapp development, and next we are going to DApp development.
 
@@ -112,12 +112,12 @@ All above are just traditional webapp development, and next we are going to DApp
 
 This step instructs how to have a DApp running on CITA.
 
-The DApp interacts with CITA by the `cita-sdk.js` and details of `cita` can be accessed at [@cryptape/cita-sdk](https://www.npmjs.com/package/@cryptape/cita-sdk)
+The DApp interacts with CITA by the `cita-sdk.js` and details of `cita` can be accessed at [@citahub/cita-sdk](https://www.npmjs.com/package/@citahub/cita-sdk)
 
-In order to use cita-sdk.js, add cita-sdk as other packages by yarn `yarn add @cryptape/cita-sdk`, and then instantiate `cita` in `src/cita-sdk.js`.
+In order to use cita-sdk.js, add cita-sdk as other packages by yarn `yarn add @citahub/cita-sdk`, and then instantiate `cita` in `src/cita-sdk.js`.
 
 ```javascript
-const { default: CITASDK } = require('@cryptape/cita-sdk')
+const { default: CITASDK } = require('@citahub/cita-sdk')
 
 const config = require('./config')
 
@@ -131,7 +131,7 @@ module.exports = cita
 
 ## 4. Smart Contract
 
-This DApp works with an extremely simple smart contract -- [SimpleStore](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
+This DApp works with an extremely simple smart contract -- [SimpleStore](https://github.com/citahub/first-forever-demo/tree/master/src/contracts/SimpleStore.sol).
 
 ```solidity
 pragma solidity 0.4.24;
@@ -166,19 +166,19 @@ contract SimpleStore {
 }
 ```
 
-Smart Contract can be debugged on [CITA-IDE](https://appchain-ide.cryptape.com/), an online solidity debugger
+Smart Contract can be debugged on [CITA-IDE](https://appchain-ide.citahub.com/), an online solidity debugger
 
-![remix](https://cdn.cryptape.com/docs/images/remix.png)
+![remix](https://cdn.citahub.com/docs/images/remix.png)
 
 By clicking on `Detail` in the right-side panel, compiled details will show as follow
 
-![remix](https://cdn.cryptape.com/docs/images/remix_detail.png)
+![remix](https://cdn.citahub.com/docs/images/remix_detail.png)
 
 In details, **bytecode** and **abi** will be used in this demo.
 
 **bytecode** is used to deploy the contract, and **abi** is used to instantiate a contract instance for interacting.
 
-### Deploy and Test the Contract
+### 5. Deploy and Test the Contract
 
 Create directory in `src`
 
@@ -191,11 +191,11 @@ Create directory in `src`
 │   └── transaction.js
 ```
 
-- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/SimpleStore.sol)
+- Store SimpleStore Source Code in [SimpleStore.sol](https://github.com/citahub/first-forever-demo/tree/master/src/contracts/SimpleStore.sol)
 
-- Store **bytecode** and **abi** in [compiled.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/compiled.js)
+- Store **bytecode** and **abi** in [compiled.js](https://github.com/citahub/first-forever-demo/tree/master/src/contracts/compiled.js)
 
-- Store transaction template in [transaction.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/transaction.js)
+- Store transaction template in [transaction.js](https://github.com/citahub/first-forever-demo/tree/master/src/contracts/transaction.js)
 
   ```javascript
   const cita = require('../cita')
@@ -213,7 +213,7 @@ Create directory in `src`
   module.exports = transaction
   ```
 
-- Store deploy script in [deploy.js](https://github.com/cryptape/first-forever-demo/tree/master/src/contracts/deploy.js)
+- Store deploy script in [deploy.js](https://github.com/citahub/first-forever-demo/tree/master/src/contracts/deploy.js)
 
   ```javascript
   const cita = require('../cita')
@@ -258,7 +258,7 @@ Create directory in `src`
     .catch(err => console.error(err))
   ```
 
-- Store test script in [contracts.test.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
+- Store test script in [contracts.test.js](https://github.com/citahub/first-forever-demo/tree/develop/src/contracts/contracts.test.js)
 
   ```javascript
   const cita = require('../cita')
@@ -293,7 +293,7 @@ Create directory in `src`
   }, 3000)
   ```
 
-- Add deploy and test script in [package.json](https://github.com/cryptape/first-forever-demo/tree/develop/package.json)
+- Add deploy and test script in [package.json](https://github.com/citahub/first-forever-demo/tree/develop/package.json)
 
   ```json
   "scripts": {
@@ -307,7 +307,10 @@ Create directory in `src`
   ```shell
   $ cp src/config.js.example src/config.js
   ```
-
+- install dependencies
+   ```
+   $ npm install
+   ```
 - Deploy the contract
 
   ```shell
@@ -331,7 +334,7 @@ Create directory in `src`
 
 ### Instantiate Contract
 
-Instantiate Contract in [simpleStore.js](https://github.com/cryptape/first-forever-demo/tree/develop/src/simpleStore.js) under `src`
+Instantiate Contract in [simpleStore.js](https://github.com/citahub/first-forever-demo/tree/develop/src/simpleStore.js) under `src`
 
 ```javascript
 const cita = require('./cita')
@@ -430,21 +433,21 @@ componentDidMount() {
 
 As all of these done, start the local server by `npm start` to launch the DApp.
 
-![first forever](https://cdn.cryptape.com/docs/images/ff_1.png)
-![first forever](https://cdn.cryptape.com/docs/images/ff_2.png)
-![first forever](https://cdn.cryptape.com/docs/images/ff_3.png)
-![first forever](https://cdn.cryptape.com/docs/images/ff_4.png)
+![first forever](https://cdn.citahub.com/docs/images/ff_1.png)
+![first forever](https://cdn.citahub.com/docs/images/ff_2.png)
+![first forever](https://cdn.citahub.com/docs/images/ff_3.png)
+![first forever](https://cdn.citahub.com/docs/images/ff_4.png)
 
 # Run in cita-web-debugger
 
-[cita-web-debugger](https://github.com/cryptape/cita.js/tree/develop/packages/cita-web-debugger) is an extension of chrome and debugger tool for CITA.
+[cita-web-debugger](https://github.com/citahub/cita.js/tree/develop/packages/cita-web-debugger) is an extension of chrome and debugger tool for CITA.
 
 ## Integrate cita-web-debugger and Remove Account From CITA SDK
 
 ```javascript
 // src/cita-sdk.js
 
-const { default: CITASDK } = require('@cryptape/cita-sdk')
+const { default: CITASDK } = require('@citahub/cita-sdk')
 
 const config = require('./config')
 
@@ -523,7 +526,7 @@ After these modification, first-forever-demo will work with cita-web-debugger pe
 
 # Run in cyton wallet App
 
-Cyton is a blockchain wallet APP which supports CITA and Ethereum, it contains two platform versions: [Android](https://github.com/cryptape/cyton-android) and [iOS](https://github.com/cryptape/cyton-ios).
+Cyton is a blockchain wallet APP which supports CITA and Ethereum, it contains two platform versions: [Android](https://github.com/citahub/cyton-android) and [iOS](https://github.com/citahub/cyton-ios).
 
 You just update little code to adapter Cyton (Android and iOS).
 
@@ -539,13 +542,13 @@ If you have more than one chain, you should set more pairs of chain id and node 
 
 {
   "name": "CITA First Forever",                              // chain name
-  "blockViewer": "https://microscope.cryptape.com/",             // blockchain browser
+  "blockViewer": "https://microscope.citahub.com/",             // blockchain browser
   "chainSet": {                                                 // a set of chainId and node httpprovider
-    "1": "https://node.cryptape.com"                            // key is chainId, value is node httpprovider
+    "1": "https://node.citahub.com"                            // key is chainId, value is node httpprovider
   },
   "icon": "http://7xq40y.com1.z0.glb.clouddn.com/23.pic.jpg",   // chain icon
-  "entry": "https://first-forever.dapp.cryptape.com/",          // DApp entry
-  "provider": "https://cryptape.com/"                           // DApp provider
+  "entry": "https://first-forever.dapp.citahub.com/",          // DApp entry
+  "provider": "https://citahub.com/"                           // DApp provider
 }
 ```
 
@@ -560,7 +563,7 @@ You should also set path of manifest.json in html file using link tag.
 Then you also should update `cita.js`.
 
 ```javascript
-const { default: CITASDK } = require('@cryptape/cita-sdk')
+const { default: CITASDK } = require('@citahub/cita-sdk')
 
 // Cyton will provider cita object to dapp browser and dapp just update currentProivder and host
 if (typeof window.cita !== 'undefined') {
