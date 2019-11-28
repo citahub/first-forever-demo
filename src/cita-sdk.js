@@ -1,6 +1,7 @@
 const { default: CITASDK } = require("@cryptape/cita-sdk");
 
 const config = require("./config");
+require('dotenv').config();
 
 var cita; // config.chain indicates that the address of CITA to interact
 

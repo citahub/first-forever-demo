@@ -5,6 +5,7 @@
   "homepage": "",
   "dependencies": {
     "@cryptape/cita-sdk": "^1.0.1",
+    "dotenv": "^8.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
@@ -20,7 +21,7 @@
     "test": "react-scripts test --env=jsdom --runInBand",
     "eject": "react-scripts eject",
     "deploy": "node ./src/contracts/deploy.js",
-    "test:contract": "node ./src/contracts/contracts.test.js"
+    "test:contract": "jest ./src/contracts/contracts.test.js"
   },
   "browserslist": [
     ">0.2%",
