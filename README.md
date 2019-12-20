@@ -544,10 +544,10 @@ If you have more than one chain, you should set more pairs of chain id and node 
   "name": "CITA First Forever",                              // chain name
   "blockViewer": "https://microscope.citahub.com/",             // blockchain browser
   "chainSet": {                                                 // a set of chainId and node httpprovider
-    "1": "https://node.citahub.com"                            // key is chainId, value is node httpprovider
+    "1": "https://testnet.citahub.com"                            // key is chainId, value is node httpprovider
   },
   "icon": "http://7xq40y.com1.z0.glb.clouddn.com/23.pic.jpg",   // chain icon
-  "entry": "https://first-forever.dapp.citahub.com/",          // DApp entry
+  "entry": "https://first-forever.citahub.com/",          // DApp entry
   "provider": "https://citahub.com/"                           // DApp provider
 }
 ```
