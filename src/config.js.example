@@ -1,5 +1,5 @@
 const config = {
-  chain: 'https://node.citahub.com',
+  chain: 'https://testnet.citahub.com',
   privateKey: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
   contractAddress: ''
 }
