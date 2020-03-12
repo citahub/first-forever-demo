@@ -53,7 +53,7 @@ class Add extends React.Component {
         this.setState({
           submitText: submitTexts.submitting,
         })
-        return simpleStoreContract.methods.add(text, +time).send(tx)
+        return simpleStoreContract.methods.add(text, +time, 'text').send(tx)
       })
       .then(res => {
         if (res.hash) {

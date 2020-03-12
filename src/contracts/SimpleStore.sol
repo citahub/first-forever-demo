@@ -8,6 +8,7 @@ contract SimpleStore {
     struct Message {
         string msgType;
         string msgContent;
+        uint256 time;
     }
 
     event Recorded(address _sender, string indexed _text, string msgType, uint256 indexed _time);
@@ -28,9 +29,9 @@ contract SimpleStore {
         Message memory message;
 
         if(keccak256(msgType) == keccak256("image")) {
-            message = Message("image", text);
+            message = Message("image", text, time);
         } else {
-            message = Message("text", text);
+            message = Message("text", text, time);
         }
 
         records[msg.sender][time]=message;
@@ -38,8 +39,8 @@ contract SimpleStore {
         emit Recorded(msg.sender, text, msgType, time);
     }
 
-    function get(uint256 time) public view returns(string, string) {
+    function get(uint256 time) public view returns(string msgType, string msgContent, uint256 msgTime) {
         Message message = records[msg.sender][time];
-        return (message.msgType, message.msgContent);
+        return (message.msgType, message.msgContent, message.time);
     }
 }
