@@ -8,7 +8,7 @@ const { REACT_APP_RUNTIME } = process.env
 class Show extends React.Component {
   state = {
     time: 0,
-    text: '',
+    message: '',
     errorText: '',
   }
 
@@ -27,8 +27,8 @@ class Show extends React.Component {
         .call({
           from,
         })
-        .then(text => {
-          this.setState({ time, text })
+        .then(message => {
+          this.setState({ time, message })
         })
         .catch(error => this.setState({ errorText: JSON.stringify(error) }))
     } else {
@@ -36,7 +36,7 @@ class Show extends React.Component {
     }
   }
   render() {
-    const { time, text } = this.state
+    const { time, message } = this.state
     const _time = new Date(+time)
     if (!time) {
       return <div style={{ textAlign: 'center' }}>正在加载您的回忆</div>
@@ -44,8 +44,12 @@ class Show extends React.Component {
     return (
       <div className="show__container">
         <span className="show__time">{_time.toLocaleString()}</span>
-        <img src="https://picsum.photos/200/100?random" alt="rand_img" className="show__photo" />
-        <div className="show__text">{text}</div>
+        {/*<img src="https://picsum.photos/200/100?random" alt="rand_img" className="show__photo" />*/}
+        {message.msgType === "image" ? (
+            <div className="show__text"><img src={message.msgContent} style={{maxWidth: "100%", marginTop: 8}}/></div>
+        ) : (
+            <div className="show__text">{message.msgContent}</div>
+        )}
         <BottomNav active={'list'} />
       </div>
     )

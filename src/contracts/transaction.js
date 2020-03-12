@@ -1,7 +1,7 @@
 const cita = require("../cita-sdk");
 const transaction = {
   nonce: 999999,
-  quota: 1000000,
+  quota: 0x0000000000000000000000000000000000000000000000000000000010000000,
   chainId: "0x1",
   version: 2,
   validUntilBlock: 999999,

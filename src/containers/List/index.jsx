@@ -23,7 +23,7 @@ const Record = ({ time, message, hasYearLabel }) => {
         </span>{" "}
         <Link to={`/show/${time}`}>
           {message.msgType === "image" ? (
-              <img src={message.msgContent} style={{maxWidth: "100%"}}/>
+              <div><img src={message.msgContent} style={{maxWidth: "100%"}}/></div>
           ) : (
             <div>{message.msgContent}</div>
           )}{" "}
