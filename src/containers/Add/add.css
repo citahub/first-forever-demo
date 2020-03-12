@@ -10,7 +10,7 @@
 }
 
 .add__content--container>textarea {
-  margin-bottom: 31px;
+  margin-bottom: 16px;
 }
 
 .add__content--container>div {
@@ -72,4 +72,16 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.add__content--uploader {
+  border: 1px solid #fe792b;
+  width: 100%;
+  font-size: 14px;
+  color: #828181;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 10px 10px 0 rgba(254, 121, 43, 0.05);
+  padding: 4px;
+  margin-bottom: 32px;
 }

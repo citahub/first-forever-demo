@@ -7,24 +7,32 @@ require("./list.css");
 
 const { REACT_APP_RUNTIME } = process.env;
 
-const Record = ({ time, text, hasYearLabel }) => {
+const Record = ({ time, message, hasYearLabel }) => {
   const _time = new Date(+time);
-  return (
-    <div className="list__record--container">
-      {" "}
-      {hasYearLabel ? (
-        <div className="list__record--year"> {_time.getFullYear()} </div>
-      ) : null}{" "}
-      <span>
+  if (message) {
+    return (
+      <div className="list__record--container">
         {" "}
-        {`${_time.getMonth() +
-          1}-${_time.getDate()} ${_time.getHours()}:${_time.getMinutes()}`}{" "}
-      </span>{" "}
-      <Link to={`/show/${time}`}>
-        <div> {text} </div>{" "}
-      </Link>{" "}
-    </div>
-  );
+        {hasYearLabel ? (
+          <div className="list__record--year"> {_time.getFullYear()} </div>
+        ) : null}{" "}
+        <span>
+          {" "}
+          {`${_time.getMonth() +
+            1}-${_time.getDate()} ${_time.getHours()}:${_time.getMinutes()}`}{" "}
+        </span>{" "}
+        <Link to={`/show/${time}`}>
+          {message.msgType === "image" ? (
+              <img src={message.msgContent} style={{maxWidth: "100%"}}/>
+          ) : (
+            <div>{message.msgContent}</div>
+          )}{" "}
+        </Link>{" "}
+      </div>
+    );
+  } else {
+    return null;
+  }
 };
 
 class List extends React.Component {
@@ -75,7 +83,7 @@ class List extends React.Component {
         {times.map((time, idx) => (
           <Record
             time={time}
-            text={texts[idx] && texts[idx].msgContent}
+            message={texts[idx]}
             key={time}
             hasYearLabel={
               idx === 0 ||
