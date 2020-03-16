@@ -25,7 +25,7 @@ const Record = ({ time, message, hasYearLabel }) => {
           {message.msgType === "image" ? (
               <div><img src={message.msgContent} style={{maxWidth: "100%"}}/></div>
           ) : (
-            <div>{message.msgContent}</div>
+            <div>{message.msgContent || message}</div>
           )}{" "}
         </Link>{" "}
       </div>
@@ -68,6 +68,7 @@ class List extends React.Component {
         );
       })
       .then(texts => {
+        console.log(texts)
         this.setState({
           texts
         });
@@ -76,7 +77,6 @@ class List extends React.Component {
   }
   render() {
     const { times, texts } = this.state;
-    console.log(texts);
     return (
       <div className="list__record--page">
         {" "}
