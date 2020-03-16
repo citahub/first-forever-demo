@@ -1,4 +1,4 @@
-const {abi, bytecode} = require('../build/contracts/SimpleStore');
+const {abi, bytecode} = require('../build/contracts/SimpleStoreV2');
 
 module.exports = {
   abi,

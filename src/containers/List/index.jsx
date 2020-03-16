@@ -23,7 +23,9 @@ const Record = ({ time, message, hasYearLabel }) => {
         </span>{" "}
         <Link to={`/show/${time}`}>
           {message.msgType === "image" ? (
-              <div><img src={message.msgContent} style={{maxWidth: "100%"}}/></div>
+            <div>
+              <img src={message.msgContent} style={{ maxWidth: "100%" }} />
+            </div>
           ) : (
             <div>{message.msgContent || message}</div>
           )}{" "}
@@ -60,15 +62,13 @@ class List extends React.Component {
           times
         });
         return Promise.all(
-          times.map(time =>
-            simpleStoreContract.methods.get(time).call({
-              from
-            })
-          )
+          times.map(time => {
+            return simpleStoreContract.methods.get(time).call({ from });
+          })
         );
       })
       .then(texts => {
-        console.log(texts)
+        console.log(texts);
         this.setState({
           texts
         });

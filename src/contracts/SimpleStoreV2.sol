@@ -39,8 +39,11 @@ contract SimpleStoreV2 {
         emit Recorded(msg.sender, text, msgType, time);
     }
 
-    function get(uint256 time) public view returns(string memory msgType, string memory msgContent, uint256 msgTime) {
+    function get(uint256 time) public view returns(string memory msgContent, string memory msgType,uint256 msgTime) {
         Message memory message = records[msg.sender][time];
-        return (message.msgType, message.msgContent, message.time);
+        if(message.msgType) {
+            return (message.msgContent, message.msgType, message.time);
+        }
+        return message;
     }
 }
