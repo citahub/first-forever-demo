@@ -1,7 +1,7 @@
-pragma solidity 0.4.24;
+pragma solidity 0.5.0;
 
 
-contract SimpleStore {
+contract SimpleStoreV2 {
     mapping (address => mapping (uint256 => Message)) private records;
     mapping (address => uint256[]) private categories;
 
@@ -20,15 +20,15 @@ contract SimpleStore {
     function getList()
     public
     view
-    returns (uint256[])
+    returns (uint256[] memory)
     {
         return categories[msg.sender];
     }
 
-    function add(string text, uint256 time, string msgType) public {
+    function add(string memory text, uint256 time, string memory msgType) public {
         Message memory message;
 
-        if(keccak256(msgType) == keccak256("image")) {
+        if(keccak256(abi.encodePacked(msgType)) == keccak256("image")) {
             message = Message("image", text, time);
         } else {
             message = Message("text", text, time);
@@ -39,8 +39,8 @@ contract SimpleStore {
         emit Recorded(msg.sender, text, msgType, time);
     }
 
-    function get(uint256 time) public view returns(string msgType, string msgContent, uint256 msgTime) {
-        Message message = records[msg.sender][time];
+    function get(uint256 time) public view returns(string memory msgType, string memory msgContent, uint256 msgTime) {
+        Message memory message = records[msg.sender][time];
         return (message.msgType, message.msgContent, message.time);
     }
 }

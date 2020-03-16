@@ -1,5 +1,5 @@
 const cita = require("../cita-sdk");
-const { abi, bytecode } = require("./compiled.js");
+const { abi, bytecode } = require("../build/contracts/SimpleStore");
 const config = require("../config");
 
 const account = cita.base.accounts.privateKeyToAccount(config.privateKey); // create account by private key from config
