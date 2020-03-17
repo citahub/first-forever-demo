@@ -1,12 +1,18 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.4.24;
 
-import "@openzeppelin/contracts/ownership/Ownable.sol";
-
-contract Proxy is Ownable {
-
+contract UpgradableManager {
+    address _implementation;
+    address owner;
     event Upgraded(address indexed implementation);
 
-    address internal _implementation;
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner(){
+        require(msg.sender == owner);
+        _;
+    }
 
     function implementation() public view returns (address) {
         return _implementation;
@@ -14,11 +20,13 @@ contract Proxy is Ownable {
 
     function upgradeTo(address impl) public onlyOwner {
         require(_implementation != impl);
+        // call migrate
+        impl.call(bytes4(keccak256("migrate")));
         _implementation = impl;
         emit Upgraded(impl);
     }
     // fallback function
-    function () payable external {
+    function() payable external {
         address _impl = implementation();
         require(_impl != address(0));
         // copy incoming call data
@@ -40,5 +48,4 @@ contract Proxy is Ownable {
             default { return(ptr, size) }
         }
     }
-
 }

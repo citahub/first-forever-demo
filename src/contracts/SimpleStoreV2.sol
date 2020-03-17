@@ -1,17 +1,24 @@
-pragma solidity 0.5.0;
-
+pragma solidity 0.4.24;
 
 contract SimpleStoreV2 {
+    address owner;
     mapping (address => mapping (uint256 => Message)) private records;
     mapping (address => uint256[]) private categories;
-
     struct Message {
         string msgType;
         string msgContent;
-        uint256 time;
+        uint256 msgTime;
     }
 
     event Recorded(address _sender, string indexed _text, string msgType, uint256 indexed _time);
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function migration(address) {
+        require(msg.sender == owner);
+    }
 
     function _addToList(address from, uint256 time) private {
         categories[from].push(time);
@@ -41,9 +48,10 @@ contract SimpleStoreV2 {
 
     function get(uint256 time) public view returns(string memory msgContent, string memory msgType,uint256 msgTime) {
         Message memory message = records[msg.sender][time];
-        if(message.msgType) {
-            return (message.msgContent, message.msgType, message.time);
-        }
-        return message;
+//        if(bytes(message.msgType).length == 0) {
+//            message =  Message({msgType: 'text', msgContent: , msgTime: time});
+//
+//        }
+        return (message.msgContent, message.msgType, message.msgTime);
     }
 }

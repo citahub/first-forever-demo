@@ -13,7 +13,7 @@ cita.base
   })
   .then(() => {
     simpleStoreContract.methods
-      .upgradeTo("0xB9B42feBcB70BDd3b45E890fF4fa27B18F3C100A")
+      .upgradeTo("0x948f636f28509b26374a5AaBa8fa315C162Fc082")
       .call({
         from
       });

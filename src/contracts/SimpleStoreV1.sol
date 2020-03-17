@@ -1,10 +1,10 @@
-pragma solidity 0.5.0;
+pragma solidity 0.4.24;
 
-import "./Proxy.sol";
-
-contract SimpleStore is Proxy{
+contract SimpleStore {
+    address owner;
     mapping (address => mapping (uint256 => string)) private records;
     mapping (address => uint256[]) private categories;
+
 
     event Recorded(address _sender, string indexed _text, uint256 indexed _time);
 
