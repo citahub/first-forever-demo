@@ -21,7 +21,7 @@ contract UpgradableManager {
     function upgradeTo(address impl) public onlyOwner {
         require(_implementation != impl);
         // call migrate
-        impl.call(bytes4(keccak256("migrate")));
+        impl.call(bytes4(keccak256("migrate(address)")), _implementation);
         _implementation = impl;
         emit Upgraded(impl);
     }

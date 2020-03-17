@@ -16,7 +16,7 @@ contract SimpleStoreV2 {
         owner = msg.sender;
     }
 
-    function migration(address) {
+    function migrate(address prev) public {
         require(msg.sender == owner);
     }
 
@@ -48,10 +48,10 @@ contract SimpleStoreV2 {
 
     function get(uint256 time) public view returns(string memory msgContent, string memory msgType,uint256 msgTime) {
         Message memory message = records[msg.sender][time];
-//        if(bytes(message.msgType).length == 0) {
-//            message =  Message({msgType: 'text', msgContent: , msgTime: time});
-//
-//        }
+        //        if(bytes(message.msgType).length == 0) {
+        //            message =  Message({msgType: 'text', msgContent: , msgTime: time});
+        //
+        //        }
         return (message.msgContent, message.msgType, message.msgTime);
     }
 }
