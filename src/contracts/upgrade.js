@@ -1,10 +1,18 @@
 const cita = require("../cita-sdk");
-const { simpleStoreContract } = require("../simpleStore");
-const { contractAddress } = require("../config");
 let transaction = require("./transaction");
-// const {contractAddress: upgradeAddress, abi: upgradeAbi} = require("../build/contracts/SimpleStoreV2");
-const {contractAddress: upgradeAddress, abi: upgradeAbi} = require("../build/contracts/SimpleStoreV2");
+// const {contractAddress: upgradeAddress, abi: upgradeAbi} = require("../build/contracts/SimpleStore");
+const {
+  contractAddress: upgradeAddress,
+  abi: upgradeAbi
+} = require("../build/contracts/SimpleStoreV2");
 const from = cita.base.accounts.wallet[0].address;
+
+const {
+  abi,
+  contractAddress
+} = require("../build/contracts/UpgradableManager");
+
+const UpdateManagerContract = new cita.base.Contract(abi, contractAddress);
 
 cita.base
   .getBlockNumber()
@@ -12,11 +20,9 @@ cita.base
     transaction.validUntilBlock = height + 80;
   })
   .then(() => {
-    simpleStoreContract.methods
-      .upgradeTo(upgradeAddress)
-      .call({
-        from
-      });
+    UpdateManagerContract.methods.upgradeTo(upgradeAddress).call({
+      from
+    });
   })
   .then(() => {
     console.log(transaction);
