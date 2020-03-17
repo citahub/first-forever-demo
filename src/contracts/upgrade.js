@@ -2,8 +2,8 @@ const cita = require("../cita-sdk");
 const { simpleStoreContract } = require("../simpleStore");
 const { contractAddress } = require("../config");
 let transaction = require("./transaction");
-const { abi: v2abi } = require("../build/contracts/SimpleStoreV2");
-const { abi: v1abi } = require("../build/contracts/SimpleStore");
+// const {contractAddress: upgradeAddress, abi: upgradeAbi} = require("../build/contracts/SimpleStoreV2");
+const {contractAddress: upgradeAddress, abi: upgradeAbi} = require("../build/contracts/SimpleStoreV2");
 const from = cita.base.accounts.wallet[0].address;
 
 cita.base
@@ -13,13 +13,13 @@ cita.base
   })
   .then(() => {
     simpleStoreContract.methods
-      .upgradeTo("0x948f636f28509b26374a5AaBa8fa315C162Fc082")
+      .upgradeTo(upgradeAddress)
       .call({
         from
       });
   })
   .then(() => {
     console.log(transaction);
-    cita.base.storeAbi(contractAddress, v1abi, transaction);
+    cita.base.storeAbi(contractAddress, upgradeAbi, transaction);
   })
   .catch(console.error);

@@ -16,44 +16,46 @@ transaction = {
 const contractBuilds = path.resolve(__dirname, "../build/contracts/");
 const contracts = fs
   .readdirSync(contractBuilds)
-  .map(file => require(path.resolve(__dirname, contractBuilds, file)))
+  .map(file => require(path.resolve(contractBuilds, file)))
   .map(contract => deploy(contract));
 
 function deploy(contract) {
-  let _contractAddress = "";
   const myContract = new cita.base.Contract(contract.abi);
 
   cita.base
-  .getBlockNumber()
-  .then(current => {
-    transaction.validUntilBlock = +current + 88; // update transaction.validUntilBlock
-    // deploy contract
-    return myContract
-    .deploy({
-      data: contract.bytecode,
-      arguments: []
+    .getBlockNumber()
+    .then(current => {
+      transaction.validUntilBlock = +current + 88; // update transaction.validUntilBlock
+      // deploy contract
+      return myContract
+        .deploy({
+          data: contract.bytecode,
+          arguments: []
+        })
+        .send(transaction);
     })
-    .send(transaction);
-  })
-  .then(txRes => {
-    if (txRes.hash) {
-      // get transaction receipt
-      return cita.listeners.listenToTransactionReceipt(txRes.hash);
-    } else {
-      throw new Error("No Transaction Hash Received");
-    }
-  })
-  .then(res => {
-    const { contractAddress, errorMessage } = res;
-    if (errorMessage) throw new Error(errorMessage);
-    console.log(`${contract.contractName} is: ${contractAddress}`);
-    _contractAddress = contractAddress;
-    return cita.base.storeAbi(contractAddress, contract.abi, transaction); // store abi on the chain
-  })
-  .then(res => {
-    if (res.errorMessage) throw new Error(res.errorMessage);
-    return cita.base.getAbi(_contractAddress, "pending") // get abi from the chain
-  })
-  .catch(err => console.error(err));
+    .then(txRes => {
+      if (txRes.hash) {
+        // get transaction receipt
+        return cita.listeners.listenToTransactionReceipt(txRes.hash);
+      } else {
+        throw new Error("No Transaction Hash Received");
+      }
+    })
+    .then(res => {
+      const { contractAddress, errorMessage } = res;
+      if (errorMessage) throw new Error(errorMessage);
+      console.log(`${contract.contractName} is: ${contractAddress}`);
+      contract.contractAddress = contractAddress;
+      fs.writeFileSync(
+        path.resolve(contractBuilds, `${contract.contractName}.json`),
+        JSON.stringify(contract, null, 2)
+      );
+      return cita.base.storeAbi(contractAddress, contract.abi, transaction); // store abi on the chain
+    })
+    // .then(res => {
+    //   if (res.errorMessage) throw new Error(res.errorMessage);
+    //   return cita.base.getAbi(_contractAddress, "pending") // get abi from the chain
+    // })
+    .catch(err => console.error(err));
 }
-
