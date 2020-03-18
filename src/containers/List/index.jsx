@@ -52,6 +52,12 @@ class List extends React.Component {
         ? window.cyton.getAccount()
         : "";
     simpleStoreContract.methods
+      .getUsers()
+      .call({ from })
+      .then(res => {
+        console.log(res);
+      });
+    simpleStoreContract.methods
       .getList()
       .call({
         from
