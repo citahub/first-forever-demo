@@ -3,7 +3,7 @@ pragma solidity 0.4.24;
 contract UpgradableManager {
     address _implementation;
     address owner;
-    event Upgraded(address indexed implementation);
+    event Upgraded(address implementation);
 
     constructor() public {
         owner = msg.sender;
@@ -29,20 +29,21 @@ contract UpgradableManager {
     function() payable external {
         address _impl = implementation();
         require(_impl != address(0));
-        // copy incoming call data
-        // official new version is 'calldatacopy(ptr, 0, calldatasize)'
-
-        bytes memory data = msg.data;
 
         assembly {
-        // forward call to logic contract
-            let result := delegatecall(gas, _impl, add(data, 0x20), mload(data), 0, 0)
-            let size := returndatasize
-        // 获取0x40位置往下32个字节存储的数据
             let ptr := mload(0x40)
-        // retrieve return data
+
+        // (1) copy incoming call data
+            calldatacopy(ptr, 0, calldatasize)
+
+        // (2) forward call to logic contract
+            let result := call(sub(gas, 10000), _impl, 0, ptr, calldatasize, 0, 0)
+            let size := returndatasize
+
+        // (3) retrieve return data
             returndatacopy(ptr, 0, size)
-        // forward return data back to caller
+
+        // (4) forward return data back to caller
             switch result
             case 0 { revert(ptr, size) }
             default { return(ptr, size) }
