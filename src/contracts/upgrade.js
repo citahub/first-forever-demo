@@ -1,10 +1,11 @@
 const cita = require("../cita-sdk");
 let transaction = require("./transaction");
-// const {contractAddress: upgradeAddress, abi: upgradeAbi} = require("../build/contracts/SimpleStore");
+const path = require("path");
+const location = process.argv.slice(2)[0];
 const {
   contractAddress: upgradeAddress,
   abi: upgradeAbi
-} = require("../build/contracts/SimpleStoreV2");
+} = require(path.resolve(location));
 // const from = cita.base.accounts.wallet[0].address;
 const {
   abi,
