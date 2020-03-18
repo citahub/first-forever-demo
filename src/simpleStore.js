@@ -1,7 +1,7 @@
 const cita = require('./cita-sdk')
 const {
   abi
-} = require('./contracts/compiled.js')
+} = require('./build/contracts/SimpleStore');
 const {
   contractAddress
 } = require('./config')
