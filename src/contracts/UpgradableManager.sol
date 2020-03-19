@@ -3,10 +3,12 @@ pragma solidity 0.4.24;
 contract UpgradableManager {
     address _implementation;
     address owner;
+    address[] public delegates;
     event Upgraded(address implementation);
 
     constructor() public {
         owner = msg.sender;
+        delegates.push(msg.sender);
     }
 
     modifier onlyOwner(){
@@ -18,13 +20,34 @@ contract UpgradableManager {
         return _implementation;
     }
 
-    function upgradeTo(address impl) public onlyOwner {
+    function inDelegates(address addr) public returns(bool) {
+        for(uint i = 0; i< delegates.length; i++) {
+            if(addr == delegates[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function upgradeTo(address impl) public onlyOwner returns (bool){
         require(_implementation != impl);
+        // add to delegates
+        if(!inDelegates(impl)) {
+            delegates.push(impl);
+        }
+        //call register manager
+        bytes4 methodId = bytes4(keccak256("setManagerAddr(address,address)"));
+        impl.call(methodId, this, msg.sender);
+
         // call migrate
-        impl.call(bytes4(keccak256("migrate(address)")), _implementation);
+        bytes4 migrateId = bytes4(keccak256("migrate(address)"));
+        bool isSuccess = impl.call(migrateId, _implementation);
         _implementation = impl;
         emit Upgraded(impl);
+
+        return isSuccess;
     }
+
     // fallback function
     function() payable external {
         address _impl = implementation();
