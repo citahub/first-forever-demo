@@ -1,6 +1,6 @@
 pragma solidity 0.4.24;
-import "./Upgradable.sol";
-import "./SimpleStore.sol";
+import "./UpgradableManager.sol";
+import "./SimpleStoreV1.sol";
 
 contract SimpleStoreV2 {
     address owner;
