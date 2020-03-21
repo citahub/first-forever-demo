@@ -1,14 +1,11 @@
 pragma solidity 0.4.24;
-import "./UpgradableManager.sol";
 import "./SimpleStoreV1.sol";
+import "./Delegated.sol";
 
-contract SimpleStoreV2 {
-    address owner;
+contract SimpleStoreV2 is Delegated {
     mapping (address => mapping (uint256 => Message)) private records;
     mapping (address => uint256[]) private categories;
-    address public managerAddr;
     address[] public users;
-    address public prevAddr;
 
     struct Message {
         string msgType;
@@ -16,28 +13,16 @@ contract SimpleStoreV2 {
         uint256 msgTime;
     }
 
-    modifier onlyOwner(){
-        require(msg.sender == owner);
-        _;
-    }
-
-    modifier onlyDelegatesAndOwner() {
-        UpgradableManager manager = UpgradableManager(managerAddr);
-        require(msg.sender == owner || manager.inDelegates(msg.sender));
-        _;
-    }
-
     event Recorded(address _sender, string indexed _text, string msgType, uint256 indexed _time);
 
-    function SimpleStoreV2() public {
-        owner = msg.sender;
-    }
-
     function migrate(address prev) public {
-        prevAddr = prev;
         SimpleStore old = SimpleStore(prev);
         address[] memory oldUsers = old.getUsers();
         users = oldUsers;
+        for(uint i = 0; i< oldUsers.length; i++) {
+            uint256[] memory timestamps = old.getListFromAddress(oldUsers[i]);
+            categories[oldUsers[i]] = timestamps;
+        }
     }
 
     function _addUser(address newUser) private {
@@ -91,12 +76,9 @@ contract SimpleStoreV2 {
         return (message.msgContent, message.msgType, message.msgTime);
     }
 
-    function getUsers() public view onlyDelegatesAndOwner returns(address[]) {
+    function getUsers() public view  returns(address[]) {
         return users;
     }
 
-    function setManagerAddr(address _managerAddr, address senderAddr) {
-        require(senderAddr == owner);
-        managerAddr = _managerAddr;
-    }
+
 }
