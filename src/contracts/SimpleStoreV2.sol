@@ -4,8 +4,9 @@ import "./Delegated.sol";
 
 contract SimpleStoreV2 is Delegated {
     mapping (address => mapping (uint256 => Message)) private records;
-    mapping (address => uint256[]) private categories;
-    address[] public users;
+    mapping (address => uint256[]) private timeline;
+    address[] private users;
+
 
     struct Message {
         string msgType;
@@ -16,12 +17,34 @@ contract SimpleStoreV2 is Delegated {
     event Recorded(address _sender, string indexed _text, string msgType, uint256 indexed _time);
 
     function migrate(address prev) public {
-        SimpleStore old = SimpleStore(prev);
-        address[] memory oldUsers = old.getUsers();
+        SimpleStore prevStore = SimpleStore(prev);
+        migratingUser(prevStore);
+        migratingTimeline(prevStore);
+        migratingRecords(prevStore);
+    }
+
+
+    function migratingUser(SimpleStore prevStore) {
+        address[] memory oldUsers = prevStore.getUsers();
         users = oldUsers;
-        for(uint i = 0; i< oldUsers.length; i++) {
-            uint256[] memory timestamps = old.getListFromAddress(oldUsers[i]);
-            categories[oldUsers[i]] = timestamps;
+    }
+
+    function migratingTimeline(SimpleStore prevStore) {
+        for(uint i = 0; i< users.length; i++) {
+            uint256[] memory timestamps = prevStore.getTimelineForMigrating(users[i]);
+            timeline[users[i]] = timestamps;
+        }
+    }
+
+    function migratingRecords(SimpleStore prevStore) {
+        for(uint i = 0; i< users.length; i++) {
+            address user = users[i];
+            for(uint j = 0; j < timeline[user].length; j ++) {
+                uint256 timestamp = timeline[user][j];
+                string memory text = prevStore.getMessageForMigrating(user, timestamp);
+                Message memory textMsg = Message("text", text, timestamp);
+                records[user][timestamp] = textMsg;
+            }
         }
     }
 
@@ -45,7 +68,7 @@ contract SimpleStoreV2 is Delegated {
     }
 
     function _addToList(address from, uint256 time) private {
-        categories[from].push(time);
+        timeline[from].push(time);
     }
 
     function getList()
@@ -53,7 +76,7 @@ contract SimpleStoreV2 is Delegated {
     view
     returns (uint256[] memory)
     {
-        return categories[msg.sender];
+        return timeline[msg.sender];
     }
 
     function add(string memory text, uint256 time, string memory msgType) public {

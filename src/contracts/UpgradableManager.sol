@@ -34,12 +34,37 @@ contract UpgradableManager {
         return delegateNames[delegate];
     }
 
+    function toVersionName(string name) private returns (string) {
+        if(bytes(name).length > 0) {
+            return name;
+        } else {
+            return string(abi.encodePacked("version: ", _uint2str(delegates.length)));
+        }
+    }
+
+    function _uint2str(uint i) internal pure returns (string){
+        if (i == 0) return "0";
+        uint j = i;
+        uint length;
+        while (j != 0){
+            length++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(length);
+        uint k = length - 1;
+        while (i != 0){
+            bstr[k--] = byte(48 + i % 10);
+            i /= 10;
+        }
+        return string(bstr);
+    }
+
     function upgradeTo(address impl, string name) public onlyOwner returns (bool){
         require(_implementation != impl);
         // add to delegates
         if(!inDelegates(impl)) {
             delegates.push(impl);
-            delegateNames[impl] = _toVersionName(name);
+            delegateNames[impl] = toVersionName(name);
         }
         // call register manager
         bytes4 setManagerId = bytes4(keccak256("setManagerAddr(address,address)"));
@@ -79,28 +104,4 @@ contract UpgradableManager {
         }
     }
 
-    function _toVersionName(string name) private returns (string) {
-        if(bytes(name).length > 0) {
-            return name;
-        } else {
-            return string(abi.encodePacked("version: ", _uint2str(delegates.length)));
-        }
-    }
-
-    function _uint2str(uint i) internal pure returns (string){
-        if (i == 0) return "0";
-        uint j = i;
-        uint length;
-        while (j != 0){
-            length++;
-            j /= 10;
-        }
-        bytes memory bstr = new bytes(length);
-        uint k = length - 1;
-        while (i != 0){
-            bstr[k--] = byte(48 + i % 10);
-            i /= 10;
-        }
-        return string(bstr);
-    }
 }

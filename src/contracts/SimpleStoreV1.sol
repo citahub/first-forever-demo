@@ -3,19 +3,17 @@ import "./Delegated.sol";
 
 contract SimpleStore is Delegated {
     mapping (address => mapping (uint256 => string)) private records;
-    mapping (address => uint256[]) private categories;
-
-
+    mapping (address => uint256[]) private timeline;
     address[] private users;
 
     event Recorded(address _sender, string indexed _text, uint256 indexed _time);
 
     function _addToList(address from, uint256 time) private {
-        categories[from].push(time);
+        timeline[from].push(time);
     }
 
     function getList() public view returns (uint256[] memory) {
-        return categories[msg.sender];
+        return timeline[msg.sender];
     }
 
     function _addUser(address newUser) private {
@@ -51,8 +49,12 @@ contract SimpleStore is Delegated {
         return users;
     }
 
-    function getListFromAddress(address addr) public view onlyDelegatesAndOwner returns(uint256[] memory) {
-        return categories[addr];
+    function getTimelineForMigrating(address addr) public view onlyDelegatesAndOwner returns(uint256[] memory) {
+        return timeline[addr];
+    }
+
+    function getMessageForMigrating(address addr, uint256 timestamp) public view onlyDelegatesAndOwner returns (string){
+        return records[addr][timestamp];
     }
 
 }
