@@ -25,7 +25,7 @@ contract SimpleStoreV2 is Delegated {
 
 
     function migratingUser(SimpleStore prevStore) {
-        address[] memory oldUsers = prevStore.getUsers();
+        address[] memory oldUsers = prevStore.getUsersForMigrating();
         users = oldUsers;
     }
 
@@ -99,9 +99,17 @@ contract SimpleStoreV2 is Delegated {
         return (message.msgContent, message.msgType, message.msgTime);
     }
 
-    function getUsers() public view  returns(address[]) {
+    function getUsersForMigrating() public view  onlyDelegatesAndOwner returns(address[]) {
         return users;
     }
 
+    function getTimelineForMigrating(address addr) public view onlyDelegatesAndOwner returns(uint256[] memory) {
+        return timeline[addr];
+    }
+
+    function getMessageForMigrating(address addr, uint256 timestamp) public view onlyDelegatesAndOwner returns (string memory msgContent, string memory msgType,uint256 msgTime){
+        Message memory message = records[addr][time];
+        return (message.msgContent, message.msgType, message.msgTime);
+    }
 
 }

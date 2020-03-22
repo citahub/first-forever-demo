@@ -45,7 +45,7 @@ contract SimpleStore is Delegated {
         return records[msg.sender][time];
     }
 
-    function getUsers() public view onlyDelegatesAndOwner returns(address[]) {
+    function getUsersForMigrating() public view onlyDelegatesAndOwner returns(address[]) {
         return users;
     }
 
