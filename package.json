@@ -22,6 +22,7 @@
     "test": "react-scripts test --env=jsdom --runInBand",
     "eject": "react-scripts eject",
     "deploy": "node ./src/contracts/deploy.js",
+    "versions": "node ./src/contracts/versions.js",
     "test:contract": "jest ./src/contracts/contracts.test.js"
   },
   "browserslist": [

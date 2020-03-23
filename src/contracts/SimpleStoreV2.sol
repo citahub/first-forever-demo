@@ -108,7 +108,7 @@ contract SimpleStoreV2 is Delegated {
     }
 
     function getMessageForMigrating(address addr, uint256 timestamp) public view onlyDelegatesAndOwner returns (string memory msgContent, string memory msgType,uint256 msgTime){
-        Message memory message = records[addr][time];
+        Message memory message = records[addr][timestamp];
         return (message.msgContent, message.msgType, message.msgTime);
     }
 

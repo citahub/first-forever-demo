@@ -5,7 +5,7 @@ const location = process.argv.slice(2)[0];
 const {
   contractAddress: upgradeAddress,
   abi: upgradeAbi,
-  contractName,
+  contractName
 } = require(path.resolve(location));
 // const from = cita.base.accounts.wallet[0].address;
 const {
@@ -21,9 +21,13 @@ cita.base
     transaction.validUntilBlock = height + 80;
   })
   .then(() => {
-    UpdateManagerContract.methods.upgradeTo(upgradeAddress, contractName).send(transaction).then(hash => console.log(hash))
+    UpdateManagerContract.methods
+      .upgradeTo(upgradeAddress, contractName)
+      .send(transaction)
+      .then(hash => console.log(hash))
   })
   .then(() => {
-    cita.base.storeAbi(contractAddress, upgradeAbi, transaction).then(console.log);
+    cita.base
+      .storeAbi(contractAddress, upgradeAbi, transaction)
   })
   .catch(console.error);

@@ -5,8 +5,8 @@ contract UpgradableManager {
     address _implementation;
     address owner;
     address[] public delegates;
-    string[] public versions;
-    mapping(address => string) delegateNames;
+    string[] private versions;
+    mapping(address => string) public delegateNames;
     event Upgraded(address implementation);
 
     constructor() public {
@@ -29,6 +29,10 @@ contract UpgradableManager {
             }
         }
         return false;
+    }
+
+    function getVersions() public returns (string[]){
+        return versions;
     }
 
     function upgradeTo(address impl, string name) public onlyOwner returns (bool){
