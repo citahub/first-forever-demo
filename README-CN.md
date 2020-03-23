@@ -57,8 +57,25 @@
 │   └── simpleStore.js
 └── yarn.lock
 ```
+# 快速开始
+```
+1. git clone https://github.com/citahub/first-forever-demo
+2. cd first-forever-demo
+3. npm install
+4. cp .env.example .env
+5. cp ./src/config.js.example ./src/config.js
+6. npm run deploy
+   contractAddress is: 0x21CE9960F395de32a5Deb99b8944d17Aa4561D25
+7. copy address to config.js
+   const config = {
+     contractAddress: '0x21CE9960F395de32a5Deb99b8944d17Aa4561D25',
+   }
+8. npm start
+9. say somethiing.
+```
 
-# 开始
+
+# 制作DApp
 
 ## 1. 使用 Scaffold
 
