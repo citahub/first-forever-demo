@@ -71,7 +71,7 @@
      contractAddress: '0x21CE9960F395de32a5Deb99b8944d17Aa4561D25',
    }
 8. npm start
-9. say somethiing.
+9. open "http://localhost:3000" and submit your first text to blockchain.
 ```
 
 
