@@ -18,25 +18,25 @@ contract SimpleStoreV2 is Delegated {
 
     function migrate(address prev) public {
         SimpleStore prevStore = SimpleStore(prev);
-        migratingUser(prevStore);
-        migratingTimeline(prevStore);
-        migratingRecords(prevStore);
+        migrateUser(prevStore);
+        migrateTimeline(prevStore);
+        migrateRecords(prevStore);
     }
 
 
-    function migratingUser(SimpleStore prevStore) {
+    function migrateUser(SimpleStore prevStore) {
         address[] memory oldUsers = prevStore.getUsersForMigrating();
         users = oldUsers;
     }
 
-    function migratingTimeline(SimpleStore prevStore) {
+    function migrateTimeline(SimpleStore prevStore) {
         for(uint i = 0; i< users.length; i++) {
             uint256[] memory timestamps = prevStore.getTimelineForMigrating(users[i]);
             timeline[users[i]] = timestamps;
         }
     }
 
-    function migratingRecords(SimpleStore prevStore) {
+    function migrateRecords(SimpleStore prevStore) {
         for(uint i = 0; i< users.length; i++) {
             address user = users[i];
             for(uint j = 0; j < timeline[user].length; j ++) {

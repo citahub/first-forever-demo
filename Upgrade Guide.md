@@ -36,7 +36,7 @@ function add(string memory text, uint256 time, string memory msgType) public {..
 [升级后，参考这个分支的代码实现](https://github.com/citahub/first-forever-demo/tree/feat-upgradable-contract)。
 
 ###  准备框架合约，在./src/contracts 目录下， 复制Delegated.sol和UpgradableManager.sol两个合约。
-UpgradableManager.sol是升级的主要合约，也是DApp的配置的地址。在upgradeTo传入新的地址，调用migrate。在调用方法时，兜底方法代理执行最新合约里的方法。
+UpgradableManager.sol是升级的主要合约，也是DApp的配置的地址。在upgradeTo传入新的地址，调用migrate。在调用方法时，兜底方法(fallback)代理执行最新合约里的方法。
 ```
 // UpgradableManager
 pragma solidity 0.4.24;
@@ -211,7 +211,7 @@ contract SimpleStore is Delegated
 ###  编写新的合约SimpleStoreV2
 1.申明SimpleStoreV2是可委托合约
 2.修改新的合约状态和逻辑
-3.编写migrate，将以前SimpleStoreV1的数据迁移至SimpleStoreV2中，migrate函数在升级中会被UpgradeManager自动完成。不需要迁移数据可以不写。
+3.实现 migrate 函数的内容，将以前SimpleStoreV1的数据迁移至SimpleStoreV2中，migrate函数在升级中会被UpgradeManager自动完成。如果不需要迁移数据可以不写（不需要定义空函数）。
 ```
 pragma solidity 0.4.24;
 import "./SimpleStoreV1.sol";
@@ -233,25 +233,25 @@ contract SimpleStoreV2 is Delegated {
 
     function migrate(address prev) public {
         SimpleStore prevStore = SimpleStore(prev);
-        migratingUser(prevStore);
-        migratingTimeline(prevStore);
-        migratingRecords(prevStore);
+        migrateUser(prevStore);
+        migrateTimeline(prevStore);
+        migrateRecords(prevStore);
     }
 
 
-    function migratingUser(SimpleStore prevStore) {
+    function migrateUser(SimpleStore prevStore) {
         address[] memory oldUsers = prevStore.getUsersForMigrating();
         users = oldUsers;
     }
 
-    function migratingTimeline(SimpleStore prevStore) {
+    function migrateTimeline(SimpleStore prevStore) {
         for(uint i = 0; i< users.length; i++) {
             uint256[] memory timestamps = prevStore.getTimelineForMigrating(users[i]);
             timeline[users[i]] = timestamps;
         }
     }
 
-    function migratingRecords(SimpleStore prevStore) {
+    function migrateRecords(SimpleStore prevStore) {
         for(uint i = 0; i< users.length; i++) {
             address user = users[i];
             for(uint j = 0; j < timeline[user].length; j ++) {
@@ -349,7 +349,7 @@ src/build/contracts
 ```
 npm run deploy
 ```
-编译后输出所有地址：
+部署后输出所有地址：
 ```
 Delegated is: 0x1ddf21518203369f97845904b5ED12E75f5Ca476
 migration is: 0x76a3000E30806ADdbAB3470E02D5117161a6cdA6
@@ -357,8 +357,15 @@ SimpleStore is: 0x4d03b3d9Dc8Ea1508405eB7fC4bc2536FD966ed1
 SimpleStoreV2 is: 0x2F126e3E93D33BDF2a53a12450a76FEF305eE2A7
 UpgradableManager is: 0x8cACAaC99A332ae489d12feF180F256e1BCb03fD
 ```
-将UpgradableManager的地址配置到config.js, 作为DApp的合约地址，升级合约后，配置的地址不用改变。
-
+将UpgradableManager的地址配置到config.js, 作为DApp的合约地址，升级合约后，配置的合约地址不用改变。
+```
+const config = {
+  chain: 'https://testnet.citahub.com',
+  privateKey: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+  contractAddress: '0x8cACAaC99A332ae489d12feF180F256e1BCb03fD',
+}
+module.exports = config
+```
 ####  先将V1地址注册到upgradableManager上：
 
 1. upgrade会调用UpgradableManager的UpgradeTo方法注册最新的实现地址
