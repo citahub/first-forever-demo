@@ -387,7 +387,7 @@ current: SimpleStore: 0x4d03b3d9Dc8Ea1508405eB7fC4bc2536FD966ed1
 git checkout feat-origin-version
 npm start
 ```
-![v1](./doc/v1.jpg)
+![v1](v1.jpg)
 
 ### DApp切换到feat-upgradable-contract, 升级到SimpleStorageV2，合约和Dapp都支持发送图片。
 ```
@@ -404,6 +404,6 @@ SimpleStoreV2: 0x2f126e3e93d33bdf2a53a12450a76fef305ee2a7
 current: SimpleStoreV2: 0x2F126e3E93D33BDF2a53a12450a76FEF305eE2A7
 ```
 ### 使用DApp 发一条文字，一条图片消息
-![v1](./doc/v2.jpg)
+![v1](v2.jpg)
 
 在列表中能看到图片，也能看到v1的消息。合约的数据的迁移和方法升级已经成功。
