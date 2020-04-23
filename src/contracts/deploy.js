@@ -1,4 +1,4 @@
-const cita = require("../cita-sdk");
+const cita = require("../cita");
 const { abi, bytecode } = require("./compiled.js");
 const config = require("../config");
 

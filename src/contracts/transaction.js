@@ -7,8 +7,8 @@ const transaction = {
   validUntilBlock: 999999,
   value: "0x0"
 };
-if (process.env.REACT_APP_RUNTIME === "web") {
-  transaction.from = cita.base.accounts.wallet[0].address;
+if (process.env.REACT_APP_RUNTIME === "web" || process.env.REACT_APP_RUNTIME === "webRandomPk") {
+  transaction.from = cita.getFromAddress();
   transaction.privateKey = cita.base.accounts.wallet[0].privateKey;
 }
 
