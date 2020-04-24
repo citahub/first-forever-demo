@@ -7,6 +7,7 @@
 我们提供三种方式：
 
 - [运行在 PC 和移动浏览器](#运行在-pc-和移动浏览器)：在 `.env` 设置 `REACT_APP_RUNTIME=web`
+- 运行在 PC 和移动浏览器， 随机生成私钥：在 `.env` 设置 `REACT_APP_RUNTIME=webRandomPk`
 - [集成 cita-web-debugger 运行](#集成-cita-web-debugger-运行)： 在 `.env` 设置`REACT_APP_RUNTIME=cita-web-debugger`
 - [集成 Cyton Wallet App 运行](#集成-cyton-wallet-app-运行)：在 `.env` 设置 `REACT_APP_RUNTIME=cyton`
 
