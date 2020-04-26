@@ -9,10 +9,6 @@ import {
 import cita from '../../cita-sdk'
 
 const timeFormatter = time => ('' + time).padStart(2, '0')
-const {
-  REACT_APP_RUNTIME
-} = process.env
-
 const submitTexts = {
   normal: '愿此刻永恒',
   submitting: '保存中',
@@ -43,13 +39,7 @@ class Add extends React.Component {
           ...transaction,
           validUntilBlock: +current + 88,
         }
-        tx.from =
-          REACT_APP_RUNTIME === 'web' ?
-            cita.base.accounts.wallet[0].address :
-            REACT_APP_RUNTIME === 'cita-web-debugger' ?
-              cita.base.defaultAccount :
-              REACT_APP_RUNTIME === 'cyton' ?
-                window.cyton.getAccount() : ''
+        tx.from = cita.getFromAddress()
         this.setState({
           submitText: submitTexts.submitting,
         })

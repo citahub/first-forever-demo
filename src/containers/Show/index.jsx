@@ -4,7 +4,6 @@ import BottomNav from '../../components/BottomNav'
 import { simpleStoreContract } from '../../simpleStore'
 require('./show.css')
 
-const { REACT_APP_RUNTIME } = process.env
 class Show extends React.Component {
   state = {
     time: 0,
@@ -14,13 +13,7 @@ class Show extends React.Component {
 
   componentDidMount() {
     const { time } = this.props.match.params
-    const from =
-      REACT_APP_RUNTIME === 'web'
-        ? cita.base.accounts.wallet[0].address
-        : REACT_APP_RUNTIME === 'cita-web-debugger'
-          ? cita.base.defaultAccount
-          : REACT_APP_RUNTIME === 'cyton'
-            ? window.cyton.getAccount() : ''
+    const from = cita.getFromAddress()
     if (time) {
       simpleStoreContract.methods
         .get(time)

@@ -7,6 +7,7 @@ This demo shows the entire process of building a MVP DApp on CITA.
 We provider three situations：
 
 - [run in PC and mobile browser directly](#run-in-pc-and-mobile-browser): set `REACT_APP_RUNTIME=web` in `.env`
+- run in PC and mobile browser directly, generate random private key ：set `REACT_APP_RUNTIME=webRandomPk` in `.env`
 - [run in cita-web-debugger](#run-in-cita-web-debugger): set `REACT_APP_RUNTIME=cita-web-debugger` in `.env`
 - [run in cyton wallet App](#run-in-cyton-wallet-app): set `REACT_APP_RUNTIME=cyton` in `env`
 
