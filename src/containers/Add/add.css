@@ -73,3 +73,11 @@
   top: 0;
   left: 0;
 }
+.toMicroscope {
+  width: 100%;
+  text-align: center;
+  color: #fe792b;
+  display: inline-block;
+  margin-top: 20px;
+  cursor: pointer;
+}
