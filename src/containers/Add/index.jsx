@@ -107,7 +107,7 @@ class Add extends React.Component {
           />{' '}
           <Submit text={submitText} onClick={this.handleSubmit}
                   disabled={submitText !== submitTexts.normal}/>{' '}
-          {this.state.hash && <a className="toMicroscope" href={`${REACT_APP_MICROSCOPE}/#/transaction/hash/${this.state.hash}`}>查询交易Hash</a>}
+          {this.state.hash && REACT_APP_MICROSCOPE &&  <a className="toMicroscope" href={`${REACT_APP_MICROSCOPE}/#/transaction/hash/${this.state.hash}`}>查询交易Hash</a>}
           {errorText && <span className="warning"> {errorText} </span>}
           <BottomNav showAdd={false}/>{' '}
 
